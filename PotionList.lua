@@ -1,5 +1,5 @@
 return {
-	LuckyList = {
+	LuckyLists = {
 		"Lucky I", 
 		"Lucky II", 
 		"Lucky III", 
@@ -8,7 +8,7 @@ return {
 		"Lucky Evolved"
 	},
 
-	SpeedList = {
+	SpeedLists = {
 		"Speed I", 
 		"Speed II", 
 		"Speed III", 
@@ -17,7 +17,7 @@ return {
 		"Speed Evolved"
 	},
 
-	MythicList = {
+	MythicLists = {
 		"Mythic I", 
 		"Mythic II", 
 		"Mythic III", 
@@ -26,7 +26,7 @@ return {
 		"Mythic Evolved"
 	},
 
-	ListCoinP = {
+	ListCoinPs = {
 		"Coins I", 
 		"Coins II", 
 		"Coins III", 
