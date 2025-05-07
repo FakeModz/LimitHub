@@ -1,5 +1,5 @@
 return {
-	PetWeb = {
+	PetWebs = {
 		["Void Kitty"] = true, 
 		["Emerald Golem"] = true, 
 		["Inferno Dragon"] = true, 
@@ -41,7 +41,7 @@ return {
 		["Stone Gargoyle"] = true
 	},
 
-	SecretPetW = {
+	SecretPetWs = {
 		["The Overlord"] = true,
 		["Royal Trophy"] = true,
 		["Godly Gem"] = true, 
