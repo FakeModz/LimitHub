@@ -1,5 +1,5 @@
 return {
-	FlavorList = {
+	FlavorLists = {
 		"Blueberry - 25 Coin", 
 		"Chery - 500 Coin", 
 		"Pizza - 1.500 Coin", 
@@ -13,7 +13,7 @@ return {
 		"Molten - 350M Coin"
 	},
 
-	StorageList = {
+	StorageLists = {
 		"Stretchy Gum - 25 Coin", 
 		"Chewy Gum - 250 Coin", 
 		"Epic Gum - 1.500 Coin", 
