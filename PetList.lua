@@ -1,6 +1,6 @@
 return {
 	PetWebs = {
-		["Void Kitty"] = true, 
+	
 		["Emerald Golem"] = true, 
 		["Inferno Dragon"] = true, 
 		["Unicorn"] = true, 
