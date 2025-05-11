@@ -41,7 +41,10 @@ return {
 		["Stone Gargoyle"] = true, 
 		["Prismatic"] = true, 
 		["Darkness Creature"] = true, 
-		["Corrupt Glitch"] = true
+		["Corrupt Glitch"] = true,
+		["Crimson Butterfly"] = true, 
+		["Demonweb"] = true, 
+		["Crimson Bloodmoon"] = true
 		
 	},
 
@@ -56,6 +59,7 @@ return {
 		["Giant Chocolate Chicken"] = true, 
 		["Avernus"] = true, 
 		["Mech Robot"] = true, 
-		["Wolflord"] = true
+		["Wolflord"] = true, 
+		["Lord Shock"] = true
 	}
 }
