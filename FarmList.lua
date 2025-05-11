@@ -3,7 +3,7 @@ return {
 		"Common Egg", "Spotted Egg", "Iceshard Egg", "Spikey Egg",
 		"Magma Egg", "Crystal Egg", "Lunar Egg", "Void Egg",
 		"Hell Egg", "Nightmare Egg", "Rainbow Egg", "Infinity Egg",
-		"Showman Egg", "Mining Egg", "Cyber Egg", "Game Egg"
+		"Showman Egg", "Mining Egg", "Cyber Egg", "Game Egg", "200M Egg"
 	},
 
 	ListEnchants = {
