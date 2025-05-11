@@ -38,7 +38,11 @@ return {
 		["Game Master"] = true, 
 		["Jackpot"] = true, 
 		["Crystal Unicorn"] = true, 
-		["Stone Gargoyle"] = true
+		["Stone Gargoyle"] = true, 
+		["Prismatic"] = true, 
+		["Darkness Creature"] = true, 
+		["Corrupt Glitch"] = true
+		
 	},
 
 	SecretPetWs = {
@@ -51,6 +55,7 @@ return {
 		["Easter Basket"] = true, 
 		["Giant Chocolate Chicken"] = true, 
 		["Avernus"] = true, 
-		["Mech Robot"] = true
+		["Mech Robot"] = true, 
+		["Wolflord"] = true
 	}
 }
