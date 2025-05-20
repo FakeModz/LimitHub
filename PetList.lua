@@ -44,7 +44,11 @@ return {
 		["Corrupt Glitch"] = true,
 		["Crimson Butterfly"] = true, 
 		["Demonweb"] = true, 
-		["Crimson Bloodmoon"] = true
+		["Crimson Bloodmoon"] = true, 
+		["Neon Wyvern"] = true, 
+		["Neon Wire Eye"] = true, 
+		["Equalizer"] = true, 
+		["Ring Master"] = true
 		
 	},
 
@@ -60,6 +64,9 @@ return {
 		["Avernus"] = true, 
 		["Mech Robot"] = true, 
 		["Wolflord"] = true, 
-		["Lord Shock"] = true
+		["Lord Shock"] = true, 
+		["Hyperwave Kitty"] = true, 
+		["Royal Guardian"] = true
+		
 	}
 }
