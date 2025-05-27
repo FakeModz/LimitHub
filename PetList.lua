@@ -48,7 +48,14 @@ return {
 		["Neon Wyvern"] = true, 
 		["Neon Wire Eye"] = true, 
 		["Equalizer"] = true, 
-		["Ring Master"] = true
+		["Ring Master"] = true, 
+		["Popsicle Trio"] = true, 
+		["Soarin' Surfer"] = true, 
+		["Sundae Cone"] = true, 
+		["Kiwi Dragon"] = true, 
+		["Mangorium"] = true, 
+		["Pineapple Tourist"] = true
+		
 		
 	},
 
@@ -66,7 +73,13 @@ return {
 		["Wolflord"] = true, 
 		["Lord Shock"] = true, 
 		["Hyperwave Kitty"] = true, 
-		["Royal Guardian"] = true
+		["Royal Guardian"] = true, 
+		["Mint Sundae Champion"] = true, 
+		["Vanilla Sundae Champion"] = true, 
+		["Chocolate Sundae Champion"] = true, 
+		["Strawberry Sundae Champion"] = true, 
+		["Dragon Fruit"] = true
+		
 		
 	}
 }
