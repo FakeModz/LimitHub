@@ -1,9 +1,5 @@
 
 
---[[local message = Instance.new("Message", workspace)
-message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
-setclipboard("discord.gg/speedhubx")]]
-
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -13,7 +9,7 @@ local Camera = game:GetService("Workspace").CurrentCamera
 local Mouse = LocalPlayer:GetMouse()
 local httpService = game:GetService("HttpService")
 local VirtualUser = game:GetService("VirtualUser")
-
+local ElementsTable = {}
 local RenderStepped = RunService.RenderStepped
 
 LocalPlayer.Idled:connect(function()
@@ -1390,7 +1386,6 @@ Components.Tab = (function()
 	local Spring = Flipper.Spring.new
 	local Instant = Flipper.Instant.new
 	local Components = Components
-    local ElementsTable = {}
 	local TabModule = {
 		Window = nil,
 		Tabs = {},
@@ -4289,7 +4284,7 @@ ElementsTable.Input = (function()
 	return Element
 end)()
 
-TabModule.ElementsTable = ElementsTable
+
 
 local NotificationModule = Components.Notification
 NotificationModule:Init(GUI)
