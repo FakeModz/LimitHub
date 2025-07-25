@@ -1,4 +1,8 @@
 
+--[[local message = Instance.new("Message", workspace)
+message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
+setclipboard("discord.gg/speedhubx")]]
+
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -1539,7 +1543,64 @@ Components.Tab = (function()
 			return Section
 		end
 
-		setmetatable(Tab, Elements)
+		
+    function Tab:AddGroup(GroupTitle)
+        local collapsed = false
+        local GroupFrame = Components.Section(GroupTitle, Tab.Container, true, {})
+        local ToggleArrow = Instance.new("ImageLabel")
+        ToggleArrow.Name = "Arrow"
+        ToggleArrow.Image = "rbxassetid://6034818375"
+        ToggleArrow.Rotation = 90
+        ToggleArrow.Size = UDim2.new(0, 12, 0, 12)
+        ToggleArrow.Position = UDim2.new(1, -20, 0, 6)
+        ToggleArrow.BackgroundTransparency = 1
+        ToggleArrow.Parent = GroupFrame.Frame
+
+        GroupFrame.Frame.MouseButton1Click:Connect(function()
+            collapsed = not collapsed
+            ToggleArrow.Rotation = collapsed and 0 or 90
+            for _, child in ipairs(GroupFrame.Container:GetChildren()) do
+                if not child:IsA("UIListLayout") then
+                    child.Visible = not collapsed
+                end
+            end
+        end)
+
+        local Group = {}
+        Group.Container = GroupFrame.Container
+
+        function Group:AddToggle(Config)
+            return ElementsTable.Toggle:New(Config, self.Container)
+        end
+        function Group:AddButton(Config)
+            return ElementsTable.Button:New(Config, self.Container)
+        end
+        function Group:AddLabel(Config)
+            return ElementsTable.Label:New(Config, self.Container)
+        end
+        function Group:AddParagraph(Config)
+            return ElementsTable.Paragraph:New(Config, self.Container)
+        end
+        function Group:AddSlider(Config)
+            return ElementsTable.Slider:New(Config, self.Container)
+        end
+        function Group:AddTextbox(Config)
+            return ElementsTable.Textbox:New(Config, self.Container)
+        end
+        function Group:AddKeybind(Config)
+            return ElementsTable.Keybind:New(Config, self.Container)
+        end
+        function Group:AddColorpicker(Config)
+            return ElementsTable.Colorpicker:New(Config, self.Container)
+        end
+        function Group:AddDropdown(Config)
+            return ElementsTable.Dropdown:New(Config, self.Container)
+        end
+
+        return Group
+    end
+
+    setmetatable(Tab, Elements)
 		return Tab
 	end
 
