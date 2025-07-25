@@ -1,5 +1,4 @@
 
-
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1340,7 +1339,7 @@ end)()
 
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
-        return down and "rbxassetid://14295734339" or "rbxassetid://14295734209"
+        return down and "rbxassetid://6031094678" or "rbxassetid://6031094669"
     end
 
     local Section = {}
@@ -1368,28 +1367,39 @@ Components.Section = function(Title, Parent)
         Name = "CollapseArrow",
     })
 
+    Section.TitleLabel = Creator.New("TextLabel", {
+        RichText = true,
+        Text = Title,
+        TextTransparency = 0,
+        FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
+        TextSize = 18,
+        TextXAlignment = "Left",
+        TextYAlignment = "Center",
+        Size = UDim2.new(1, -36, 0, 18),
+        Position = UDim2.fromOffset(8, 3),
+        ThemeTag = {
+            TextColor3 = "Text",
+        },
+        Name = "SectionTitle",
+    })
+
     Section.Root = Creator.New("Frame", {
-        BackgroundTransparency = 1,
+        BackgroundTransparency = 0.05,
+        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
         Size = UDim2.new(1, 0, 0, 26),
         LayoutOrder = 7,
         Parent = Parent,
         ClipsDescendants = true,
     }, {
-        Creator.New("TextLabel", {
-            RichText = true,
-            Text = Title,
-            TextTransparency = 0,
-            FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-            TextSize = 18,
-            TextXAlignment = "Left",
-            TextYAlignment = "Center",
-            Size = UDim2.new(1, -36, 0, 18),
-            Position = UDim2.fromOffset(0, 2),
-            ThemeTag = {
-                TextColor3 = "Text",
-            },
-            Name = "SectionTitle",
+        Creator.New("UICorner", {
+            CornerRadius = UDim.new(0, 6),
         }),
+        Creator.New("UIStroke", {
+            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            Color = Color3.fromRGB(60, 60, 60),
+            Transparency = 0.4,
+        }),
+        Section.TitleLabel,
         Section.CollapseButton,
         Section.Container,
     })
@@ -1399,7 +1409,7 @@ Components.Section = function(Title, Parent)
     local function collapse()
         Section.Collapsed = true
         Section.Container.Visible = false
-        Section.Root.Size = UDim2.new(1, 0, 0, 30)
+        Section.Root.Size = UDim2.new(1, 0, 0, 32)
         Section.CollapseButton.Image = getArrowIcon(false)
     end
 
@@ -1407,7 +1417,7 @@ Components.Section = function(Title, Parent)
         Section.Collapsed = false
         Section.Container.Visible = true
         Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 30)
         Section.CollapseButton.Image = getArrowIcon(true)
     end
 
@@ -1422,7 +1432,7 @@ Components.Section = function(Title, Parent)
     Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
         if not Section.Collapsed then
             Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 30)
         end
     end)
 
