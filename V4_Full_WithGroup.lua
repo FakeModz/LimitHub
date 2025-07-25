@@ -1,70 +1,4 @@
 
-
--- Full Source Edited: Added Collapse (Arrow Toggle) to Section Elements
-
--- Begin Collapse Function
-local function CreateCollapsibleSection(SectionFrame, TitleLabel)
-    local ToggleButton = Instance.new("ImageButton")
-    ToggleButton.Name = "CollapseButton"
-    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
-    ToggleButton.Rotation = 0
-    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
-    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
-    ToggleButton.BackgroundTransparency = 1
-    ToggleButton.ZIndex = 3
-    ToggleButton.Parent = SectionFrame
-
-    local Collapsed = false
-    local ContentFrame = SectionFrame:FindFirstChildWhichIsA("Frame", true)
-    if ContentFrame then
-        ContentFrame.Visible = true
-    end
-
-    ToggleButton.MouseButton1Click:Connect(function()
-        Collapsed = not Collapsed
-        if ContentFrame then
-            ContentFrame.Visible = not Collapsed
-            ToggleButton.Rotation = Collapsed and -90 or 0
-            if SectionFrame:FindFirstChild("Layout") then
-                SectionFrame.Layout:ApplyLayout()
-            end
-        end
-    end)
-end
--- End Collapse Function
-
--- Inject into Section Creation
-
--- Fix: Define CreateCollapsibleSection before usage
-local function CreateCollapsibleSection(SectionFrame)
-    local ToggleButton = Instance.new("ImageButton")
-    ToggleButton.Name = "CollapseButton"
-    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
-    ToggleButton.Rotation = 0
-    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
-    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
-    ToggleButton.BackgroundTransparency = 1
-    ToggleButton.ZIndex = 3
-    ToggleButton.Parent = SectionFrame
-    local Collapsed = false
-    local ContentFrame = SectionFrame:FindFirstChild("Container")
-    ToggleButton.MouseButton1Click:Connect(function()
-        Collapsed = not Collapsed
-        if ContentFrame then
-            ContentFrame.Visible = not Collapsed
-            ToggleButton.Rotation = Collapsed and -90 or 0
-        end
-    end)
-end
-
--- Override after definition
-local OriginalSection = Components.Section
-Components.Section = function(Title, Parent)
-    local Section = OriginalSection(Title, Parent)
-    CreateCollapsibleSection(Section.Root)
-    return Section
-end
-
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1402,91 +1336,74 @@ Components.Element = (function()
 		return Element
 	end
 end)()
+
 Components.Section = (function()
-	local New = Creator.New
+    local New = Creator.New
 
-	return function(Title, Parent)
-		local Section = {}
+    return function(Title, Parent)
+        local Section = {}
 
-		Section.Layout = New("UIListLayout", {
-			Padding = UDim.new(0, 5),
-		})
+        Section.Layout = New("UIListLayout", {
+            Padding = UDim.new(0, 5),
+        })
 
-		Section.Container = New("Frame", {
-			Size = UDim2.new(1, 0, 0, 26),
-			Position = UDim2.fromOffset(0, 24),
-			BackgroundTransparency = 1,
-		}, {
-			Section.Layout,
-		})
+        Section.Content = New("Frame", {
+            Size = UDim2.new(1, 0, 0, 0),
+            BackgroundTransparency = 1,
+            AutomaticSize = Enum.AutomaticSize.Y,
+        }, {
+            Section.Layout
+        })
 
-		Section.Root = New("Frame", {
-			BackgroundTransparency = 1,
-			Size = UDim2.new(1, 0, 0, 26),
-			LayoutOrder = 7,
-			Parent = Parent,
-		}, {
-			New("TextLabel", {
-				RichText = true,
-				Text = Title,
-				TextTransparency = 0,
-				FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-				TextSize = 18,
-				TextXAlignment = "Left",
-				TextYAlignment = "Center",
-				Size = UDim2.new(1, -16, 0, 18),
-				Position = UDim2.fromOffset(0, 2),
-				ThemeTag = {
-					TextColor3 = "Text",
-				},
-			}),
-			Section.Container,
-		})
+        local ToggleIcon = New("ImageLabel", {
+            Size = UDim2.fromOffset(16, 16),
+            Position = UDim2.fromOffset(0, 5),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://10709768939",
+            Rotation = 90,
+        })
 
-		Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-			Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-			Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
-		end)
-		return Section
-	end
-end)()
+        Section.Header = New("TextButton", {
+            Size = UDim2.new(1, 0, 0, 26),
+            BackgroundTransparency = 1,
+            Text = "  " .. Title,
+            Font = Enum.Font.GothamBold,
+            TextSize = 16,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            ThemeTag = {
+                TextColor3 = "Text",
+            },
+        }, {
+            ToggleIcon
+        })
 
--- Inject Collapse Button into Section
-local function CreateCollapsibleSection(SectionFrame, TitleLabel)
-    local ToggleButton = Instance.new("ImageButton")
-    ToggleButton.Name = "CollapseButton"
-    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
-    ToggleButton.Rotation = 0
-    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
-    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
-    ToggleButton.BackgroundTransparency = 1
-    ToggleButton.ZIndex = 3
-    ToggleButton.Parent = SectionFrame
+        Section.Root = New("Frame", {
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1, 0, 0, 26),
+            AutomaticSize = Enum.AutomaticSize.Y,
+            Parent = Parent,
+        }, {
+            Section.Header,
+            Section.Content,
+        })
 
-    local Collapsed = false
-    local ContentFrame = SectionFrame:FindFirstChildWhichIsA("Frame", true)
-    if ContentFrame then
-        ContentFrame.Visible = true
-    end
+        local collapsed = false
+        Section.Header.MouseButton1Click:Connect(function()
+            collapsed = not collapsed
+            Section.Content.Visible = not collapsed
+            ToggleIcon.Rotation = collapsed and 0 or 90
+        end)
 
-    ToggleButton.MouseButton1Click:Connect(function()
-        Collapsed = not Collapsed
-        if ContentFrame then
-            ContentFrame.Visible = not Collapsed
-            ToggleButton.Rotation = Collapsed and -90 or 0
-        end
-    end)
-end
+        Section.Content.Visible = true
+        ToggleIcon.Rotation = 90
 
-do
-    local OriginalSection = Components.Section
-    Components.Section = function(Title, Parent)
-        local Section = OriginalSection(Title, Parent)
-        CreateCollapsibleSection(Section.Root, Title)
+        Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+            Section.Content.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
+        end)
+
         return Section
     end
-end
-
+end)()
 
 Components.Tab = (function()
 	local New = Creator.New
