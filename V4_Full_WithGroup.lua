@@ -1,5 +1,7 @@
 
-
+--[[local message = Instance.new("Message", workspace)
+message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
+setclipboard("discord.gg/speedhubx")]]
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1420,6 +1422,49 @@ Components.Tab = (function()
 			Name = Title,
 			Type = "Tab",
 		}
+		function Tab:AddGroup(GroupTitle)
+    local Section = Components.Section(GroupTitle, Tab.Container, true, {})
+    local Group = {}
+    Group.Container = Section
+
+    function Group:AddToggle(Config)
+        return ElementsTable.Toggle:New(Config, self.Container)
+    end
+
+    function Group:AddButton(Config)
+        return ElementsTable.Button:New(Config, self.Container)
+    end
+
+    function Group:AddLabel(Config)
+        return ElementsTable.Label:New(Config, self.Container)
+    end
+
+    function Group:AddParagraph(Config)
+        return ElementsTable.Paragraph:New(Config, self.Container)
+    end
+
+    function Group:AddSlider(Config)
+        return ElementsTable.Slider:New(Config, self.Container)
+    end
+
+    function Group:AddTextbox(Config)
+        return ElementsTable.Textbox:New(Config, self.Container)
+    end
+
+    function Group:AddKeybind(Config)
+        return ElementsTable.Keybind:New(Config, self.Container)
+    end
+
+    function Group:AddColorpicker(Config)
+        return ElementsTable.Colorpicker:New(Config, self.Container)
+    end
+
+    function Group:AddDropdown(Config)
+        return ElementsTable.Dropdown:New(Config, self.Container)
+    end
+
+    return Group
+end
 
 		if Library:GetIcon(Icon) then
 			Icon = Library:GetIcon(Icon)
