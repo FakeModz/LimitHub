@@ -1,4 +1,5 @@
 
+
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1389,7 +1390,7 @@ Components.Tab = (function()
 	local Spring = Flipper.Spring.new
 	local Instant = Flipper.Instant.new
 	local Components = Components
-
+    local ElementsTable = {}
 	local TabModule = {
 		Window = nil,
 		Tabs = {},
@@ -1413,7 +1414,6 @@ Components.Tab = (function()
 	function TabModule:New(Title, Icon, Parent)
 		local Window = TabModule.Window
 		local Elements = Library.Elements
-		local ElementsTable = TabModule.ElementsTable
 		
 		TabModule.TabCount = TabModule.TabCount + 1
 		local TabIndex = TabModule.TabCount
@@ -2700,7 +2700,7 @@ Components.Window = (function()
 	end
 end)()
 
-local ElementsTable = {}
+
 local AddSignal = Creator.AddSignal
 
 ElementsTable.Button = (function()
