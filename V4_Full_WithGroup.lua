@@ -1413,7 +1413,8 @@ Components.Tab = (function()
 	function TabModule:New(Title, Icon, Parent)
 		local Window = TabModule.Window
 		local Elements = Library.Elements
-
+		local ElementsTable = TabModule.ElementsTable
+		
 		TabModule.TabCount = TabModule.TabCount + 1
 		local TabIndex = TabModule.TabCount
 
@@ -4287,6 +4288,8 @@ ElementsTable.Input = (function()
 
 	return Element
 end)()
+
+TabModule.ElementsTable = ElementsTable
 
 local NotificationModule = Components.Notification
 NotificationModule:Init(GUI)
