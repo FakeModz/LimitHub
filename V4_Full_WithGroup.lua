@@ -1,5 +1,4 @@
 
-
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1339,31 +1338,6 @@ Components.Element = (function()
 end)()
 
 
-
-Creator.New = function(className, properties, children)
-    local inst = Instance.new(className)
-
-    if type(properties) == "table" then
-        for prop, val in pairs(properties) do
-            local success, err = pcall(function()
-                inst[prop] = val
-            end)
-            if not success then
-                warn("Property set failed:", prop, err)
-            end
-        end
-    end
-
-    if type(children) == "table" then
-        for _, child in ipairs(children) do
-            child.Parent = inst
-        end
-    end
-
-    return inst
-end
-
-
 Components.Section = (function()
     local New = Creator.New
 
@@ -1380,7 +1354,8 @@ Components.Section = (function()
             AutomaticSize = Enum.AutomaticSize.Y,
             Visible = true,
             Name = "ContentFrame",
-        }, {
+        },
+	AutomaticSize = Enum.AutomaticSize.Y, {
             Section.Layout
         })
 
