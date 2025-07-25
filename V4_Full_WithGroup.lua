@@ -1,4 +1,5 @@
 
+
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1336,6 +1337,31 @@ Components.Element = (function()
 		return Element
 	end
 end)()
+
+
+
+Creator.New = function(className, properties, children)
+    local inst = Instance.new(className)
+
+    if type(properties) == "table" then
+        for prop, val in pairs(properties) do
+            local success, err = pcall(function()
+                inst[prop] = val
+            end)
+            if not success then
+                warn("Property set failed:", prop, err)
+            end
+        end
+    end
+
+    if type(children) == "table" then
+        for _, child in ipairs(children) do
+            child.Parent = inst
+        end
+    end
+
+    return inst
+end
 
 
 Components.Section = (function()
