@@ -277,6 +277,55 @@ function Linear:step(state, dt)
 		velocity = 0
 	end
 
+
+IndigoTheme = {
+    Name = "IndigoTheme",
+    Accent = Color3.fromRGB(63, 81, 181),
+
+    AcrylicMain = Color3.fromRGB(26, 26, 32),
+    AcrylicBorder = Color3.fromRGB(80, 80, 100),
+    AcrylicGradient = ColorSequence.new(Color3.fromRGB(40, 40, 50), Color3.fromRGB(20, 20, 30)),
+    AcrylicNoise = 0.75,
+
+    TitleBarLine = Color3.fromRGB(100, 100, 150),
+    Tab = Color3.fromRGB(120, 140, 200),
+
+    Element = Color3.fromRGB(63, 81, 181),
+    ElementBorder = Color3.fromRGB(50, 50, 80),
+    InElementBorder = Color3.fromRGB(70, 70, 100),
+    ElementTransparency = 0.8,
+
+    ToggleSlider = Color3.fromRGB(100, 120, 220),
+    ToggleToggled = Color3.fromRGB(255, 255, 255),
+
+    SliderRail = Color3.fromRGB(160, 160, 190),
+
+    DropdownFrame = Color3.fromRGB(35, 35, 45),
+    DropdownHolder = Color3.fromRGB(55, 55, 70),
+    DropdownBorder = Color3.fromRGB(63, 81, 181),
+    DropdownOption = Color3.fromRGB(120, 140, 200),
+
+    Keybind = Color3.fromRGB(120, 120, 200),
+
+    Input = Color3.fromRGB(200, 200, 230),
+    InputFocused = Color3.fromRGB(40, 40, 60),
+    InputIndicator = Color3.fromRGB(100, 130, 255),
+
+    Dialog = Color3.fromRGB(30, 30, 40),
+    DialogHolder = Color3.fromRGB(50, 50, 70),
+    DialogHolderLine = Color3.fromRGB(63, 81, 181),
+    DialogButton = Color3.fromRGB(40, 40, 60),
+    DialogButtonBorder = Color3.fromRGB(100, 120, 200),
+    DialogBorder = Color3.fromRGB(70, 70, 90),
+    DialogInput = Color3.fromRGB(45, 45, 60),
+    DialogInputLine = Color3.fromRGB(120, 140, 200),
+
+    Text = Color3.fromRGB(255, 255, 255),
+    SubText = Color3.fromRGB(180, 180, 200),
+    Hover = Color3.fromRGB(140, 160, 255),
+    HoverChange = 0.07,
+}
+
 	return {
 		complete = complete,
 		value = position,
@@ -5617,7 +5666,7 @@ function Library:CreateWindow(Config)
 
 	Library.UseAcrylic = Config.Acrylic or false
 	Library.Acrylic = Config.Acrylic or false
-	Library.Theme = Config.Theme or "SpeedHubX"
+Library.Theme = "IndigoTheme"
 	if Config.Acrylic then
 		Acrylic.init()
 	end
@@ -5639,7 +5688,7 @@ end
 
 function Library:SetTheme(Value)
 	if Library.Window and table.find(Library.Themes, Value) then
-		Library.Theme = Value
+Library.Theme = "IndigoTheme"
 		Creator.UpdateTheme()
 	end
 end
