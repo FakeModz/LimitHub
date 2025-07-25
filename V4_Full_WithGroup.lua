@@ -1,6 +1,52 @@
 
 
 
+-- Full Source Edited: Added Collapse (Arrow Toggle) to Section Elements
+
+-- Begin Collapse Function
+local function CreateCollapsibleSection(SectionFrame, TitleLabel)
+    local ToggleButton = Instance.new("ImageButton")
+    ToggleButton.Name = "CollapseButton"
+    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
+    ToggleButton.Rotation = 0
+    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
+    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.ZIndex = 3
+    ToggleButton.Parent = SectionFrame
+
+    local Collapsed = false
+    local ContentFrame = SectionFrame:FindFirstChildWhichIsA("Frame", true)
+    if ContentFrame then
+        ContentFrame.Visible = true
+    end
+
+    ToggleButton.MouseButton1Click:Connect(function()
+        Collapsed = not Collapsed
+        if ContentFrame then
+            ContentFrame.Visible = not Collapsed
+            ToggleButton.Rotation = Collapsed and -90 or 0
+            if SectionFrame:FindFirstChild("Layout") then
+                SectionFrame.Layout:ApplyLayout()
+            end
+        end
+    end)
+end
+-- End Collapse Function
+
+-- Inject into Section Creation
+local OriginalSection = Components.Section
+Components.Section = function(Title, Parent)
+    local Section = OriginalSection(Title, Parent)
+    CreateCollapsibleSection(Section.Root, Title)
+    return Section
+end
+
+
+--[[local message = Instance.new("Message", workspace)
+message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
+setclipboard("discord.gg/speedhubx")]]
+
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -1382,6 +1428,44 @@ Components.Section = (function()
 		return Section
 	end
 end)()
+
+-- Inject Collapse Button into Section
+local function CreateCollapsibleSection(SectionFrame, TitleLabel)
+    local ToggleButton = Instance.new("ImageButton")
+    ToggleButton.Name = "CollapseButton"
+    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
+    ToggleButton.Rotation = 0
+    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
+    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.ZIndex = 3
+    ToggleButton.Parent = SectionFrame
+
+    local Collapsed = false
+    local ContentFrame = SectionFrame:FindFirstChildWhichIsA("Frame", true)
+    if ContentFrame then
+        ContentFrame.Visible = true
+    end
+
+    ToggleButton.MouseButton1Click:Connect(function()
+        Collapsed = not Collapsed
+        if ContentFrame then
+            ContentFrame.Visible = not Collapsed
+            ToggleButton.Rotation = Collapsed and -90 or 0
+        end
+    end)
+end
+
+do
+    local OriginalSection = Components.Section
+    Components.Section = function(Title, Parent)
+        local Section = OriginalSection(Title, Parent)
+        CreateCollapsibleSection(Section.Root, Title)
+        return Section
+    end
+end
+
+
 Components.Tab = (function()
 	local New = Creator.New
 	local Spring = Flipper.Spring.new
@@ -1541,64 +1625,7 @@ Components.Tab = (function()
 			return Section
 		end
 
-		
-    function Tab:AddGroup(GroupTitle)
-        local collapsed = false
-        local GroupFrame = Components.Section(GroupTitle, Tab.Container, true, {})
-        local ToggleArrow = Instance.new("ImageLabel")
-        ToggleArrow.Name = "Arrow"
-        ToggleArrow.Image = "rbxassetid://6034818375"
-        ToggleArrow.Rotation = 90
-        ToggleArrow.Size = UDim2.new(0, 12, 0, 12)
-        ToggleArrow.Position = UDim2.new(1, -20, 0, 6)
-        ToggleArrow.BackgroundTransparency = 1
-        ToggleArrow.Parent = GroupFrame.Frame
-
-        GroupFrame.Frame.MouseButton1Click:Connect(function()
-            collapsed = not collapsed
-            ToggleArrow.Rotation = collapsed and 0 or 90
-            for _, child in ipairs(GroupFrame.Container:GetChildren()) do
-                if not child:IsA("UIListLayout") then
-                    child.Visible = not collapsed
-                end
-            end
-        end)
-
-        local Group = {}
-        Group.Container = GroupFrame.Container
-
-        function Group:AddToggle(Config)
-            return ElementsTable.Toggle:New(Config, self.Container)
-        end
-        function Group:AddButton(Config)
-            return ElementsTable.Button:New(Config, self.Container)
-        end
-        function Group:AddLabel(Config)
-            return ElementsTable.Label:New(Config, self.Container)
-        end
-        function Group:AddParagraph(Config)
-            return ElementsTable.Paragraph:New(Config, self.Container)
-        end
-        function Group:AddSlider(Config)
-            return ElementsTable.Slider:New(Config, self.Container)
-        end
-        function Group:AddTextbox(Config)
-            return ElementsTable.Textbox:New(Config, self.Container)
-        end
-        function Group:AddKeybind(Config)
-            return ElementsTable.Keybind:New(Config, self.Container)
-        end
-        function Group:AddColorpicker(Config)
-            return ElementsTable.Colorpicker:New(Config, self.Container)
-        end
-        function Group:AddDropdown(Config)
-            return ElementsTable.Dropdown:New(Config, self.Container)
-        end
-
-        return Group
-    end
-
-    setmetatable(Tab, Elements)
+		setmetatable(Tab, Elements)
 		return Tab
 	end
 
