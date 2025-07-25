@@ -1,6 +1,5 @@
 
 
-
 -- Full Source Edited: Added Collapse (Arrow Toggle) to Section Elements
 
 -- Begin Collapse Function
@@ -35,13 +34,36 @@ end
 -- End Collapse Function
 
 -- Inject into Section Creation
+
+-- Fix: Define CreateCollapsibleSection before usage
+local function CreateCollapsibleSection(SectionFrame)
+    local ToggleButton = Instance.new("ImageButton")
+    ToggleButton.Name = "CollapseButton"
+    ToggleButton.Image = "rbxassetid://6031091002" -- down arrow
+    ToggleButton.Rotation = 0
+    ToggleButton.Size = UDim2.new(0, 18, 0, 18)
+    ToggleButton.Position = UDim2.new(1, -22, 0, 4)
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.ZIndex = 3
+    ToggleButton.Parent = SectionFrame
+    local Collapsed = false
+    local ContentFrame = SectionFrame:FindFirstChild("Container")
+    ToggleButton.MouseButton1Click:Connect(function()
+        Collapsed = not Collapsed
+        if ContentFrame then
+            ContentFrame.Visible = not Collapsed
+            ToggleButton.Rotation = Collapsed and -90 or 0
+        end
+    end)
+end
+
+-- Override after definition
 local OriginalSection = Components.Section
 Components.Section = function(Title, Parent)
     local Section = OriginalSection(Title, Parent)
-    CreateCollapsibleSection(Section.Root, Title)
+    CreateCollapsibleSection(Section.Root)
     return Section
 end
-
 
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
