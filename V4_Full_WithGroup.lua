@@ -1,6 +1,3 @@
-
-
-
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -18,6 +15,8 @@ LocalPlayer.Idled:connect(function()
     wait(1)
     VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 end)
+
+
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or function(f) end
 
@@ -1325,6 +1324,7 @@ Components.Element = (function()
 end)()
 
 
+
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
         return down and "rbxassetid://6031094678" or "rbxassetid://6031094669"
@@ -1337,12 +1337,27 @@ Components.Section = function(Title, Parent)
     })
 
     Section.Container = Creator.New("Frame", {
-        Size = UDim2.new(1, 0, 0, 26),
-        Position = UDim2.fromOffset(0, 24),
+        Size = UDim2.new(1, 0, 0, 0),
         BackgroundTransparency = 1,
         ClipsDescendants = true,
+        AutomaticSize = Enum.AutomaticSize.Y,
     }, {
         Section.Layout,
+    })
+
+    local Header = Creator.New("Frame", {
+        Size = UDim2.new(1, 0, 0, 32),
+        BackgroundColor3 = Color3.fromRGB(35, 35, 45),
+        BackgroundTransparency = 0,
+    }, {
+        Creator.New("UICorner", {
+            CornerRadius = UDim.new(0, 6),
+        }),
+        Creator.New("UIStroke", {
+            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            Color = Color3.fromRGB(60, 60, 90),
+            Transparency = 0.4,
+        }),
     })
 
     Section.CollapseButton = Creator.New("ImageButton", {
@@ -1353,45 +1368,30 @@ Components.Section = function(Title, Parent)
         Image = getArrowIcon(false),
         ZIndex = 2,
         Name = "CollapseArrow",
+        Parent = Header,
     })
 
     Section.TitleLabel = Creator.New("TextLabel", {
-        RichText = true,
         Text = Title,
-        TextTransparency = 0,
-        FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-        TextSize = 17,
-        TextXAlignment = "Left",
-        TextYAlignment = "Center",
+        Font = Enum.Font.SourceSansSemibold,
+        TextSize = 16,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        TextXAlignment = Enum.TextXAlignment.Left,
+        AnchorPoint = Vector2.new(0, 0.5),
+        Position = UDim2.new(0, 10, 0.5, 0),
         Size = UDim2.new(1, -40, 1, 0),
-        Position = UDim2.new(0, 10, 0, 0),
-        AnchorPoint = Vector2.new(0, 0),
         BackgroundTransparency = 1,
-        ThemeTag = {
-            TextColor3 = "Text",
-        },
-        Name = "SectionTitle",
+        Parent = Header,
     })
 
     Section.Root = Creator.New("Frame", {
-        BackgroundTransparency = 0.1,
-        BackgroundColor3 = Color3.fromRGB(30, 30, 40),
-        Size = UDim2.new(1, 0, 0, 32),
-        LayoutOrder = 7,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 0, 0),
+        AutomaticSize = Enum.AutomaticSize.Y,
         Parent = Parent,
-        ClipsDescendants = true,
     }, {
-        Creator.New("UICorner", {
-            CornerRadius = UDim.new(0, 6),
-        }),
-        Creator.New("UIStroke", {
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            Color = Color3.fromRGB(60, 60, 90),
-            Transparency = 0.4,
-        }),
-        Section.TitleLabel,
-        Section.CollapseButton,
-        Section.Container,
+        Header,
+        Section.Container
     })
 
     Section.Collapsed = true
@@ -1399,15 +1399,12 @@ Components.Section = function(Title, Parent)
     local function collapse()
         Section.Collapsed = true
         Section.Container.Visible = false
-        Section.Root.Size = UDim2.new(1, 0, 0, 32)
         Section.CollapseButton.Image = getArrowIcon(false)
     end
 
     local function expand()
         Section.Collapsed = false
         Section.Container.Visible = true
-        Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
         Section.CollapseButton.Image = getArrowIcon(true)
     end
 
@@ -1419,17 +1416,11 @@ Components.Section = function(Title, Parent)
         end
     end)
 
-    Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-        if not Section.Collapsed then
-            Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
-        end
-    end)
-
     collapse()
 
     return Section
 end
+
 
 
 Components.Tab = (function()
