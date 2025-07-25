@@ -5627,8 +5627,6 @@ else
 	Fluent = Library
 end
 
-return Library, SaveManager, InterfaceManager
-
 
 -- Group Injection Fallback
 
@@ -5667,3 +5665,9 @@ function Tab:AddGroup(GroupTitle)
     end
     return Group
 end
+
+				
+return Library, SaveManager, InterfaceManager
+
+
+					
