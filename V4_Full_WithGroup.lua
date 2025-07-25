@@ -1,3 +1,5 @@
+
+
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1336,198 +1338,98 @@ Components.Element = (function()
 	end
 end)()
 
-
-
-Creator.New = function(className, properties, children)
-    local inst = Instance.new(className)
-
-    if type(properties) == "table" then
-        for prop, val in pairs(properties) do
-            local success, err = pcall(function()
-                inst[prop] = val
-            end)
-            if not success then
-                warn("Property set failed:", prop, err)
-            end
-        end
+Components.Section = function(Title, Parent)
+    local function getArrowIcon(down)
+        return down and "rbxassetid://14295734339" or "rbxassetid://14295734209"
     end
 
-    if type(children) == "table" then
-        for _, child in ipairs(children) do
-            child.Parent = inst
-        end
-    end
+    local Section = {}
 
-    return inst
-end
+    Section.Layout = Creator.New("UIListLayout", {
+        Padding = UDim.new(0, 5),
+    })
 
+    Section.Container = Creator.New("Frame", {
+        Size = UDim2.new(1, 0, 0, 26),
+        Position = UDim2.fromOffset(0, 24),
+        BackgroundTransparency = 1,
+        ClipsDescendants = true,
+    }, {
+        Section.Layout,
+    })
 
-Components.Section = (function()
-    local New = Creator.New
+    Section.CollapseButton = Creator.New("ImageButton", {
+        Size = UDim2.fromOffset(18, 18),
+        Position = UDim2.new(1, -20, 0, 4),
+        AnchorPoint = Vector2.new(1, 0),
+        BackgroundTransparency = 1,
+        Image = getArrowIcon(true),
+        ZIndex = 2,
+        Name = "CollapseArrow",
+    })
 
-    return function(Title, Parent)
-        local Section = {}
-
-        Section.Layout = New("UIListLayout", {
-            Padding = UDim.new(0, 5),
-        })
-
-        Section.Content = New("Frame", {
-            Size = UDim2.new(1, 0, 0, 0)
-Section.Content.Parent = Section.Container,
-            BackgroundTransparency = 1,
-            AutomaticSize = Enum.AutomaticSize.Y,
-            Visible = true,
-            Name = "ContentFrame",
-        }, {
-            Section.Layout
-        })
-
-        local ToggleIcon = New("ImageLabel", {
-            Size = UDim2.fromOffset(16, 16),
-            AnchorPoint = Vector2.new(1, 0),
-            Position = UDim2.new(1, -8, 0, 5),
-            BackgroundTransparency = 1,
-            Image = "rbxassetid://10709768939",
-            Rotation = 90,
-            Name = "Arrow"
-        })
-
-        Section.Header = New("TextButton", {
-            Size = UDim2.new(1, 0, 0, 26),
-            BackgroundTransparency = 1,
-            Text = "  " .. Title,
-            Font = Enum.Font.GothamBold,
-            TextSize = 16,
-            TextXAlignment = Enum.TextXAlignment.Left,
+    Section.Root = Creator.New("Frame", {
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 0, 26),
+        LayoutOrder = 7,
+        Parent = Parent,
+        ClipsDescendants = true,
+    }, {
+        Creator.New("TextLabel", {
+            RichText = true,
+            Text = Title,
+            TextTransparency = 0,
+            FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
+            TextSize = 18,
+            TextXAlignment = "Left",
+            TextYAlignment = "Center",
+            Size = UDim2.new(1, -36, 0, 18),
+            Position = UDim2.fromOffset(0, 2),
             ThemeTag = {
                 TextColor3 = "Text",
             },
-        }, {
-            ToggleIcon
-        })
+            Name = "SectionTitle",
+        }),
+        Section.CollapseButton,
+        Section.Container,
+    })
 
-        Section.Root = New("Frame", {
-            BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 0, 26),
-            AutomaticSize = Enum.AutomaticSize.Y,
-            Parent = Parent,
-        }, {
-            Section.Header,
-            Section.Content,
-        })
+    Section.Collapsed = false
 
-        local collapsed = false
-        Section.Header.MouseButton1Click:Connect(function()
-            collapsed = not collapsed
-            Section.Content.Visible = not collapsed
-            ToggleIcon.Rotation = collapsed and 0 or 90
-        end)
-
-        Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-            Section.Content.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-        end)
-
-        function Section:AddToggle(config)
-            local Toggle = New("TextButton", {
-                Size = UDim2.new(1, 0, 0, 26),
-                BackgroundTransparency = 1,
-                Text = (config.Title or "Toggle") .. ": OFF",
-                Font = Enum.Font.Gotham,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Parent = Section.Content
-            })
-
-            local state = false
-            Toggle.MouseButton1Click:Connect(function()
-                state = not state
-                Toggle.Text = (config.Title or "Toggle") .. ": " .. (state and "ON" or "OFF")
-                if config.Callback then
-                    pcall(config.Callback, state)
-                end
-            end)
-        end
-
-        function Section:AddButton(config)
-            local Btn = New("TextButton", {
-                Size = UDim2.new(1, 0, 0, 26),
-                BackgroundTransparency = 1,
-                Text = config.Title or "Button",
-                Font = Enum.Font.Gotham,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Center,
-                Parent = Section.Content
-            })
-
-            Btn.MouseButton1Click:Connect(function()
-                if config.Callback then
-                    pcall(config.Callback)
-                end
-            end)
-        end
-
-        function Section:AddSlider(config)
-            local Label = New("TextLabel", {
-                Text = config.Title or "Slider",
-                Size = UDim2.new(1, 0, 0, 20),
-                BackgroundTransparency = 1,
-                Font = Enum.Font.Gotham,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Parent = Section.Content
-            })
-
-            local Slider = Instance.new("IntValue")
-            Slider.Value = config.Default or config.Min or 0
-            Slider.Changed:Connect(function(val)
-                if config.Callback then
-                    pcall(config.Callback, val)
-                end
-            end)
-        end
-
-        function Section:AddTextbox(config)
-            local Box = New("TextBox", {
-                Size = UDim2.new(1, 0, 0, 26),
-                BackgroundTransparency = 0.1,
-                Text = config.Default or "",
-                PlaceholderText = config.Title or "Enter text...",
-                Font = Enum.Font.Gotham,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Parent = Section.Content
-            })
-
-            Box.FocusLost:Connect(function()
-                if config.Callback then
-                    pcall(config.Callback, Box.Text)
-                end
-            end)
-        end
-
-        function Section:AddDropdown(config)
-            local Btn = New("TextButton", {
-                Size = UDim2.new(1, 0, 0, 26),
-                BackgroundTransparency = 1,
-                Text = config.Title or "Dropdown",
-                Font = Enum.Font.Gotham,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Parent = Section.Content
-            })
-
-            Btn.MouseButton1Click:Connect(function()
-                if config.Callback then
-                    pcall(config.Callback, config.Values[1])
-                end
-            end)
-        end
-
-        return Section
+    local function collapse()
+        Section.Collapsed = true
+        Section.Container.Visible = false
+        Section.Root.Size = UDim2.new(1, 0, 0, 30)
+        Section.CollapseButton.Image = getArrowIcon(false)
     end
-end)()
 
+    local function expand()
+        Section.Collapsed = false
+        Section.Container.Visible = true
+        Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
+        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+        Section.CollapseButton.Image = getArrowIcon(true)
+    end
+
+    Section.CollapseButton.MouseButton1Click:Connect(function()
+        if Section.Collapsed then
+            expand()
+        else
+            collapse()
+        end
+    end)
+
+    Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+        if not Section.Collapsed then
+            Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
+            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 25)
+        end
+    end)
+
+    expand()
+
+    return Section
+end
 
 Components.Tab = (function()
 	local New = Creator.New
