@@ -1,5 +1,4 @@
 
-
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -5672,5 +5671,5 @@ if getgenv then
 else
 	Fluent = Library
 end
-print("UI Baru"
+
 return Library, SaveManager, InterfaceManager
