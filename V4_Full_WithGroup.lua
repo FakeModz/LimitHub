@@ -1,7 +1,4 @@
 
---[[local message = Instance.new("Message", workspace)
-message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
-setclipboard("discord.gg/speedhubx")]]
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -19,17 +16,6 @@ LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
     wait(1)
     VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-end)
-
-task.spawn(function()
-	pcall(function()
-		if game.PlaceId == 3623096087 then
-			if game.Workspace:FindFirstChild("RobloxForwardPortals") then
-				game.Workspace.RobloxForwardPortals:Destroy()
-			end
-		end
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Main/main/Library/GUI_ADS.lua"))()
-	end)
 end)
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or function(f) end
