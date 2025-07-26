@@ -1,5 +1,5 @@
 
---V3
+--V4
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1346,10 +1346,11 @@ Components.Section = function(Title, Parent)
 
     Section.CollapseButton = Creator.New("ImageButton", {
         Size = UDim2.fromOffset(18, 18),
-        Position = UDim2.new(1, -20, 0, 4),
-        AnchorPoint = Vector2.new(1, 0),
+        Position = UDim2.new(1, -10, 0.5, 0),
+        AnchorPoint = Vector2.new(1, 0.5),
         BackgroundTransparency = 1,
         Image = getArrowIcon(true),
+        ImageColor3 = Color3.fromRGB(255, 255, 255) 
         ZIndex = 2,
         Name = "CollapseArrow",
     })
@@ -1363,8 +1364,8 @@ Components.Section = function(Title, Parent)
         TextXAlignment = "Left",
         TextYAlignment = "Center",        
         AnchorPoint = Vector2.new(0, 0.5), 
-        Position = UDim2.fromOffset(0, 8, 0.5, 0),
-        Size = UDim2.new(1, -36, 0, 18),
+        Position = UDim2.fromOffset(0, 10, 0.5, 0),
+        Size = UDim2.new(1, -40, 0, 20),
         ThemeTag = {
             TextColor3 = "Text",
         },
