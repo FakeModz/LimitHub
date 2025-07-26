@@ -1,5 +1,5 @@
 
---V7
+--V8
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1325,6 +1325,7 @@ Components.Element = (function()
 end)()
 
 -- Clean & Fixed Section Collapse Code
+-- Clean & Fixed Section Collapse Code with UIListLayout to avoid overlap
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
         return down and "rbxassetid://86190641625965" or "rbxassetid://139391375986750"
@@ -1385,6 +1386,11 @@ Components.Section = function(Title, Parent)
         Section.CollapseButton
     })
 
+    Section.RootLayout = Creator.New("UIListLayout", {
+        Padding = UDim.new(0, 0),
+        SortOrder = Enum.SortOrder.LayoutOrder
+    })
+
     Section.Root = Creator.New("Frame", {
         BackgroundTransparency = 0.05,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30),
@@ -1394,6 +1400,7 @@ Components.Section = function(Title, Parent)
         ClipsDescendants = true,
         Name = "SectionRoot"
     }, {
+        Section.RootLayout,
         Creator.New("UICorner", {
             CornerRadius = UDim.new(0, 6),
         }),
@@ -1442,6 +1449,7 @@ Components.Section = function(Title, Parent)
 
     return Section
 end
+
 
 
 Components.Tab = (function()
