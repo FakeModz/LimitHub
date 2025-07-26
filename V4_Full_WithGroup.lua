@@ -1,5 +1,5 @@
 
---V8
+--V9
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1328,7 +1328,7 @@ end)()
 -- Clean & Fixed Section Collapse Code with UIListLayout to avoid overlap
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
-        return down and "rbxassetid://86190641625965" or "rbxassetid://139391375986750"
+        return down and "rbxassetid://133100716818074" or "rbxassetid://113579468649658"
     end
 
     local Section = {}
