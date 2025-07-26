@@ -1,5 +1,5 @@
 
---V2
+--V3
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1326,7 +1326,7 @@ end)()
 
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
-        return down and "rbxassetid://6031094678" or "rbxassetid://6031094669"
+        return down and "rbxassetid://86190641625965" or "rbxassetid://139391375986750"
     end
 
     local Section = {}
@@ -1361,9 +1361,10 @@ Components.Section = function(Title, Parent)
         FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
         TextSize = 18,
         TextXAlignment = "Left",
-        TextYAlignment = "Center",
+        TextYAlignment = "Center",        
+        AnchorPoint = Vector2.new(0, 0.5), 
+        Position = UDim2.fromOffset(0, 8, 0.5, 0),
         Size = UDim2.new(1, -36, 0, 18),
-        Position = UDim2.fromOffset(8, 3),
         ThemeTag = {
             TextColor3 = "Text",
         },
