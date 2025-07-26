@@ -1,5 +1,5 @@
 
---V1
+--V2
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1391,7 +1391,7 @@ Components.Section = function(Title, Parent)
         Section.Container,
     })
 
-    Section.Collapsed = true
+    Section.Collapsed = false
 
     local function collapse()
         Section.Collapsed = true
@@ -1423,7 +1423,7 @@ Components.Section = function(Title, Parent)
         end
     end)
 
-    expand()
+    collapse()
 
     return Section
 end
@@ -5673,5 +5673,4 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
-
 
