@@ -1,4 +1,5 @@
---V6
+
+--V7
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1323,6 +1324,7 @@ Components.Element = (function()
 	end
 end)()
 
+-- Clean & Fixed Section Collapse Code
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
         return down and "rbxassetid://86190641625965" or "rbxassetid://139391375986750"
@@ -1332,15 +1334,17 @@ Components.Section = function(Title, Parent)
 
     Section.Layout = Creator.New("UIListLayout", {
         Padding = UDim.new(0, 5),
+        SortOrder = Enum.SortOrder.LayoutOrder,
     })
 
     Section.Container = Creator.New("Frame", {
-        Size = UDim2.new(1, 0, 0, 26),
-        Position = UDim2.fromOffset(0, 24),
+        Size = UDim2.new(1, 0, 0, 0),
         BackgroundTransparency = 1,
-        ClipsDescendants = true,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        Visible = false,
+        Name = "Content",
     }, {
-        Section.Layout,
+        Section.Layout
     })
 
     Section.CollapseButton = Creator.New("ImageButton", {
@@ -1349,35 +1353,46 @@ Components.Section = function(Title, Parent)
         AnchorPoint = Vector2.new(1, 0.5),
         BackgroundTransparency = 1,
         Image = getArrowIcon(true),
-        ImageColor3 = Color3.fromRGB(255, 255, 255), 
+        ImageColor3 = Color3.fromRGB(255, 255, 255),
         ZIndex = 2,
         Name = "CollapseArrow",
     })
 
     Section.TitleLabel = Creator.New("TextLabel", {
-        RichText = true,
         Text = Title,
+        RichText = true,
         TextTransparency = 0,
         FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
         TextSize = 18,
-        TextXAlignment = "Left",
-        TextYAlignment = "Center",        
-        AnchorPoint = Vector2.new(0, 0.5), 
-        Position = UDim2.fromOffset(0, 10, 0.5, 0),
-        Size = UDim2.new(1, -36, 0, 20),
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        AnchorPoint = Vector2.new(0, 0.5),
+        Position = UDim2.new(0, 10, 0.5, 0),
+        Size = UDim2.new(1, -40, 0, 20),
+        BackgroundTransparency = 1,
         ThemeTag = {
             TextColor3 = "Text",
         },
         Name = "SectionTitle",
     })
 
+    Section.Header = Creator.New("Frame", {
+        Size = UDim2.new(1, 0, 0, 32),
+        BackgroundTransparency = 1,
+        Name = "Header",
+    }, {
+        Section.TitleLabel,
+        Section.CollapseButton
+    })
+
     Section.Root = Creator.New("Frame", {
         BackgroundTransparency = 0.05,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-        Size = UDim2.new(1, 0, 0, 36),
+        Size = UDim2.new(1, 0, 0, 32),
         LayoutOrder = 7,
         Parent = Parent,
         ClipsDescendants = true,
+        Name = "SectionRoot"
     }, {
         Creator.New("UICorner", {
             CornerRadius = UDim.new(0, 6),
@@ -1387,12 +1402,11 @@ Components.Section = function(Title, Parent)
             Color = Color3.fromRGB(60, 60, 60),
             Transparency = 0.4,
         }),
-        Section.TitleLabel,
-        Section.CollapseButton,
+        Section.Header,
         Section.Container,
     })
 
-    Section.Collapsed = false
+    Section.Collapsed = true
 
     local function collapse()
         Section.Collapsed = true
@@ -1405,7 +1419,7 @@ Components.Section = function(Title, Parent)
         Section.Collapsed = false
         Section.Container.Visible = true
         Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 30)
+        Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
         Section.CollapseButton.Image = getArrowIcon(true)
     end
 
@@ -1420,7 +1434,7 @@ Components.Section = function(Title, Parent)
     Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
         if not Section.Collapsed then
             Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 30)
+            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
         end
     end)
 
@@ -1428,6 +1442,7 @@ Components.Section = function(Title, Parent)
 
     return Section
 end
+
 
 Components.Tab = (function()
 	local New = Creator.New
@@ -5674,5 +5689,4 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
-
 
