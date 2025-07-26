@@ -1,5 +1,3 @@
-
-
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1424,7 +1422,14 @@ Components.Section = function(Title, Parent)
         Section.CollapseButton.Image = getArrowIcon(true)
     end
 
-    Section.CollapseButton.MouseButton1Click:Connect(function()
+    Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+        if not Section.Collapsed then
+            Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
+            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
+        end
+    end)
+
+Section.CollapseButton.MouseButton1Click:Connect(function()
         if Section.Collapsed then
             expand()
         else
