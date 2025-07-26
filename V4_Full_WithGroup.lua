@@ -1,3 +1,5 @@
+
+
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
