@@ -1,5 +1,5 @@
 
---V11.5
+--V12
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -23,10 +23,10 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or function(f) end
 
 local Themes = {
     Names = {
-        "SpeedHubX"
+        "LimitHub"
     },
-    SpeedHubX = {
-        Name = "SpeedHubX",
+    LimitHub = {
+        Name = "LimitHub",
         Accent = Color3.fromRGB(75, 0, 130),
 
         AcrylicMain = Color3.fromRGB(20, 20, 30),
@@ -742,7 +742,7 @@ function Creator.GetThemeProperty(Property)
 	if Themes[Library.Theme][Property] then
 		return Themes[Library.Theme][Property]
 	end
-	return Themes["SpeedHubX"][Property]
+	return Themes["LimitHub"][Property]
 end
 
 function Creator.New(Name, Properties, Children)
@@ -5628,7 +5628,7 @@ function Library:CreateWindow(Config)
 
 	Library.UseAcrylic = Config.Acrylic or false
 	Library.Acrylic = Config.Acrylic or false
-	Library.Theme = Config.Theme or "SpeedHubX"
+	Library.Theme = Config.Theme or "LimitHub"
 	if Config.Acrylic then
 		Acrylic.init()
 	end
@@ -5697,3 +5697,4 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
+
