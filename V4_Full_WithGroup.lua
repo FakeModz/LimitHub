@@ -1328,7 +1328,7 @@ end)()
 
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
-        return down and "rbxassetid://6031094678" or "rbxassetid://6031094669"
+        return down and "rbxassetid://123767073052336" or "rbxassetid://123767073052336"
     end
 
     local Section = {}
@@ -5674,4 +5674,3 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
-
