@@ -1,5 +1,4 @@
-
---V5
+--V6
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1365,7 +1364,7 @@ Components.Section = function(Title, Parent)
         TextYAlignment = "Center",        
         AnchorPoint = Vector2.new(0, 0.5), 
         Position = UDim2.fromOffset(0, 10, 0.5, 0),
-        Size = UDim2.new(1, -40, 0, 20),
+        Size = UDim2.new(1, -36, 0, 20),
         ThemeTag = {
             TextColor3 = "Text",
         },
@@ -1375,7 +1374,7 @@ Components.Section = function(Title, Parent)
     Section.Root = Creator.New("Frame", {
         BackgroundTransparency = 0.05,
         BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-        Size = UDim2.new(1, 0, 0, 26),
+        Size = UDim2.new(1, 0, 0, 36),
         LayoutOrder = 7,
         Parent = Parent,
         ClipsDescendants = true,
@@ -5675,4 +5674,5 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
+
 
