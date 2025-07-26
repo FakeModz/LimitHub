@@ -1,5 +1,4 @@
 
-
 --[[local message = Instance.new("Message", workspace)
 message.Text = "Hello\nPlease Join Our New Server, More Updates / Supports\nDiscord: discord.gg/speedhubx (Copied)"
 setclipboard("discord.gg/speedhubx")]]
@@ -1340,7 +1339,6 @@ end)()
 
 
 
-
 Components.Section = function(Title, Parent)
     local function getArrowIcon(down)
         return down and "rbxassetid://6031094678" or "rbxassetid://6031094669"
@@ -1424,14 +1422,7 @@ Components.Section = function(Title, Parent)
         Section.CollapseButton.Image = getArrowIcon(true)
     end
 
-    Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-        if not Section.Collapsed then
-            Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-            Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 32)
-        end
-    end)
-
-Section.CollapseButton.MouseButton1Click:Connect(function()
+    Section.CollapseButton.MouseButton1Click:Connect(function()
         if Section.Collapsed then
             expand()
         else
@@ -1443,7 +1434,6 @@ Section.CollapseButton.MouseButton1Click:Connect(function()
 
     return Section
 end
-
 
 
 
