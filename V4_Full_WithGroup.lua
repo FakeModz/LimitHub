@@ -1,5 +1,5 @@
 
---V4
+--V5
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1350,7 +1350,7 @@ Components.Section = function(Title, Parent)
         AnchorPoint = Vector2.new(1, 0.5),
         BackgroundTransparency = 1,
         Image = getArrowIcon(true),
-        ImageColor3 = Color3.fromRGB(255, 255, 255) 
+        ImageColor3 = Color3.fromRGB(255, 255, 255), 
         ZIndex = 2,
         Name = "CollapseArrow",
     })
