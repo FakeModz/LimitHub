@@ -1,5 +1,5 @@
 
---V12
+--V12.5
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1335,7 +1335,7 @@ Components.Section = function(Title, Parent)
 
     Section.Layout = Creator.New("UIListLayout", {
         Padding = UDim.new(0, 5),
-        SortOrder = Enum.SortOrder.LayoutOrder,
+        SortOrder = Enum.SortOrder.LayoutOrder
     })
 
     Section.Container = Creator.New("Frame", {
@@ -1343,7 +1343,7 @@ Components.Section = function(Title, Parent)
         BackgroundTransparency = 1,
         AutomaticSize = Enum.AutomaticSize.Y,
         Visible = false,
-        Name = "Content",
+        Name = "Content"
     }, {
         Section.Layout
     })
@@ -1354,9 +1354,9 @@ Components.Section = function(Title, Parent)
         AnchorPoint = Vector2.new(1, 0.5),
         BackgroundTransparency = 1,
         Image = getArrowIcon(true),
-        ImageColor3 = Color3.fromRGB(255, 255, 255),
+        ImageColor3 = Color3.fromRGB(140, 0, 230),
         ZIndex = 2,
-        Name = "CollapseArrow",
+        Name = "CollapseArrow"
     })
 
     Section.TitleLabel = Creator.New("TextLabel", {
@@ -1371,16 +1371,14 @@ Components.Section = function(Title, Parent)
         Position = UDim2.new(0, 10, 0.5, 0),
         Size = UDim2.new(1, -40, 0, 20),
         BackgroundTransparency = 1,
-        ThemeTag = {
-            TextColor3 = "Text",
-        },
-        Name = "SectionTitle",
+        TextColor3 = Color3.fromRGB(230, 230, 255),
+        Name = "SectionTitle"
     })
 
     Section.Header = Creator.New("Frame", {
         Size = UDim2.new(1, 0, 0, 32),
         BackgroundTransparency = 1,
-        Name = "Header",
+        Name = "Header"
     }, {
         Section.TitleLabel,
         Section.CollapseButton
@@ -1393,7 +1391,7 @@ Components.Section = function(Title, Parent)
 
     Section.Root = Creator.New("Frame", {
         BackgroundTransparency = 0.05,
-        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+        BackgroundColor3 = Color3.fromRGB(40, 30, 60),
         Size = UDim2.new(1, 0, 0, 32),
         LayoutOrder = 7,
         Parent = Parent,
@@ -1402,15 +1400,15 @@ Components.Section = function(Title, Parent)
     }, {
         Section.RootLayout,
         Creator.New("UICorner", {
-            CornerRadius = UDim.new(0, 6),
+            CornerRadius = UDim.new(0, 6)
         }),
         Creator.New("UIStroke", {
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            Color = Color3.fromRGB(60, 60, 60),
-            Transparency = 0.4,
+            Color = Color3.fromRGB(90, 0, 170),
+            Transparency = 0.4
         }),
         Section.Header,
-        Section.Container,
+        Section.Container
     })
 
     Section.Collapsed = true
@@ -1449,7 +1447,6 @@ Components.Section = function(Title, Parent)
 
     return Section
 end
-
 
 
 Components.Tab = (function()
