@@ -1,5 +1,6 @@
 
---V13.4
+
+--V13.1
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -101,7 +102,7 @@ do
 		GUI:Destroy()
 	end
 
-	local GUI1 = game:GetService("CoreGui"):FindFirstChild("Speed_Hub_X_ScreenGui")
+	local GUI1 = game:GetService("CoreGui"):FindFirstChild("LimitHubUI")
 	if GUI1 then 
 		GUI1:Destroy()
 	end
@@ -123,13 +124,16 @@ local function CloseOpen()
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Close_ImageButton.Parent = ScreenGui
-	--Close_ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-	--Close_ImageButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Close_ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 139)
+	Close_ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 139)
 	Close_ImageButton.Position = UDim2.new(0.1021, 0, 0.0743, 0)
 	Close_ImageButton.Size = UDim2.new(0, 59, 0, 49)
 	Close_ImageButton.Image = "rbxassetid://123767073052336"
 	Close_ImageButton.Visible = false
 
+	UICorner.Name = "MainCorner"
+	UICorner.CornerRadius = UDim.new(0, 9)
+	UICorner.Parent = Close_ImageButton
 
 	local dragging = false
 	local dragStart = nil
@@ -798,7 +802,7 @@ Library.Creator = Creator
 local New = Creator.New
 
 local GUI = New("ScreenGui", {
-	Name = "Speed_Hub_X_ScreenGui",
+	Name = "LimitHubUI",
 	Parent = RunService:IsStudio() and LocalPlayer.PlayerGui or (gethui() or cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui")),
 })
 
