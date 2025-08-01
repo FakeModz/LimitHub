@@ -1,6 +1,6 @@
 
 
---V14.1
+--V14.2
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -2738,7 +2738,7 @@ ElementsTable.Button = (function()
 
 		local ButtonIco = New("ImageLabel", {
 			Image = "rbxassetid://83063565598700",
-			Size = UDim2.fromOffset(25, 25),
+			Size = UDim2.fromOffset(35, 35),
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -10, 0.5, 0),
 			BackgroundTransparency = 1,
