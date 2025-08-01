@@ -1,7 +1,7 @@
 
 
 
---V13.2
+--V13.3
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -39,12 +39,12 @@ local Themes = {
         TitleBarLine = Color3.fromRGB(100, 90, 130),
         Tab = Color3.fromRGB(100, 0, 200),
 
-        Element = Color3.fromRGB(100, 0, 200),
+        Element = Color3.fromRGB(40, 30, 60),
         ElementBorder = Color3.fromRGB(60, 60, 80),
         InElementBorder = Color3.fromRGB(90, 90, 110),
         ElementTransparency = 0.75,
 
-        ToggleSlider = Color3.fromRGB(40, 30, 60),
+        ToggleSlider = Color3.fromRGB(120, 0, 200),
         ToggleToggled = Color3.fromRGB(255, 255, 255),
 
         SliderRail = Color3.fromRGB(140, 140, 200),
