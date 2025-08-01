@@ -1,5 +1,5 @@
 
---V13
+--V13.1
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -123,7 +123,7 @@ local function CloseOpen()
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Close_ImageButton.Parent = ScreenGui
-	Close_ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	--Close_ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	Close_ImageButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
 	Close_ImageButton.Position = UDim2.new(0.1021, 0, 0.0743, 0)
 	Close_ImageButton.Size = UDim2.new(0, 59, 0, 49)
