@@ -1,6 +1,6 @@
 
 
---V14
+--V14.1
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -2738,14 +2738,12 @@ ElementsTable.Button = (function()
 
 		local ButtonIco = New("ImageLabel", {
 			Image = "rbxassetid://83063565598700",
-			Size = UDim2.fromOffset(16, 16),
+			Size = UDim2.fromOffset(25, 25),
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -10, 0.5, 0),
 			BackgroundTransparency = 1,
 			Parent = ButtonFrame.Frame,
-			ThemeTag = {
-				ImageColor3 = "Text",
-			},
+			ImageColor3 = Color3.fromRGB(140, 0, 230),
 		})
 
 		Creator.AddSignal(ButtonFrame.Frame.MouseButton1Click, function()
