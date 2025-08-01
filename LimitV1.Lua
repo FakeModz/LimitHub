@@ -1,6 +1,6 @@
 
 
---V13.4
+--V13.5
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1909,8 +1909,8 @@ Components.Notification = (function()
 	end
 
 	function Notification:New(Config)
-		Config.Title = Config.Title or "Title"
-		Config.Content = Config.Content or "Content"
+		Config.Title = Config.Title or ""
+		Config.Content = Config.Content or ""
 		Config.SubContent = Config.SubContent or ""
 		Config.Duration = Config.Duration or nil
 		Config.Buttons = Config.Buttons or {}
