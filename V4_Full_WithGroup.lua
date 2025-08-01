@@ -1,5 +1,5 @@
 
---V12.5
+--V13
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -131,7 +131,7 @@ local function CloseOpen()
 	Close_ImageButton.Visible = false
 
 	UICorner.Name = "MainCorner"
-	UICorner.CornerRadius = UDim.new(0, 9)
+	UICorner.CornerRadius = UDim.new(0, 0)
 	UICorner.Parent = Close_ImageButton
 
 	local dragging = false
@@ -5503,11 +5503,11 @@ local SaveManager = {} do
 end
 
 local InterfaceManager = {} do
-	InterfaceManager.Folder = "Speed_Hub_X_Config"
+	InterfaceManager.Folder = "LimitHub"
 	InterfaceManager.Settings = {
 		Acrylic = true,
 		Transparency = true,
-		MenuKeybind = "M"
+		MenuKeybind = "K"
 	}
 
 	function InterfaceManager:SetTheme(name)
@@ -5694,4 +5694,3 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
-
