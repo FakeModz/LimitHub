@@ -1,7 +1,6 @@
 
 
-
---V13.3
+--V13.4
 
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1895,7 +1894,7 @@ Components.Notification = (function()
 	function Notification:Init(GUI)
 		Notification.Holder = New("Frame", {
 			Position = UDim2.new(1, -30, 1, -30),
-			Size = UDim2.new(0, 310, 1, -30),
+			Size = UDim2.new(0, 240, 1, -30),
 			AnchorPoint = Vector2.new(1, 1),
 			BackgroundTransparency = 1,
 			Parent = GUI,
