@@ -1,6 +1,7 @@
 
 
---V2
+
+--V3
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3004,15 +3005,18 @@ ElementsTable.Dropdown = (function()
 		DropdownScrollFrame.Position = UDim2.new(0, 0, 0, 35)
 
 		-- Filter logic
-		SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-		    local query = SearchBox.Text:lower()
-		    local filtered = {}
-		    for _, v in ipairs(AllValues) do
-		        if query == "" or v:lower():find(query,1,true) then
-		            table.insert(filtered, v)
+		-- Filter logic (improved)
+		SearchBox.Changed:Connect(function(prop)
+		    if prop == "Text" then
+		        local query = SearchBox.Text:lower()
+		        local filtered = {}
+		        for _, v in ipairs(AllValues) do
+		            if query == "" or v:lower():find(query, 1, true) then
+		                table.insert(filtered, v)
+		            end
 		        end
+		        Dropdown:SetValues(filtered)
 		    end
-		    Dropdown:SetValues(filtered)
 		end)
 
 		-- Reset search on open
