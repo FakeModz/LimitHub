@@ -1,6 +1,7 @@
 
 
---V2
+
+--V2.5
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -84,11 +85,6 @@ local Library = {
 	Window = nil,
 	WindowFrame = nil,
 	Unloaded = false,
-
--- Optimization flags
-Library.SuppressDropdownBuild = false
-Library.Dropdowns = {}
-
 
 	Creator = nil,
 
@@ -1637,14 +1633,14 @@ Components.Tab = (function()
 
 			Window.ContainerPosMotor:setGoal(Spring(15, { frequency = 10 }))
 			Window.ContainerBackMotor:setGoal(Spring(1, { frequency = 10 }))
-			task.wait(0)
+			task.wait(0.12)
 			for _, Container in next, TabModule.Containers do
 				Container.Visible = false
 			end
 			TabModule.Containers[Tab].Visible = true
 			Window.ContainerPosMotor:setGoal(Spring(0, { frequency = 5 }))
 			Window.ContainerBackMotor:setGoal(Spring(0, { frequency = 8 }))
-			task.wait(0)
+			task.wait(0.12)
 			Window.ContainerHolder.Parent = Window.ContainerCanvas
 		end)
 	end
@@ -2868,6 +2864,7 @@ ElementsTable.Dropdown = (function()
 	function Element:New(Idx, Config)
 
 		local Dropdown = {
+			built = false,
 			Values = Config.Values,
 			Value = Config.Default,
 			Multi = Config.Multi,
@@ -3034,8 +3031,11 @@ ElementsTable.Dropdown = (function()
 		Creator.AddSignal(DropdownInner:GetPropertyChangedSignal("AbsolutePosition"), RecalculateListPosition)
 
 		Creator.AddSignal(DropdownInner.MouseButton1Click, function()
-			Dropdown:Open()
-		end)
+    if not Dropdown.built then
+                Dropdown.built = true
+    end
+    Dropdown:Open()
+end)
 
 		Creator.AddSignal(UserInputService.InputBegan, function(Input)
 			if
@@ -3106,7 +3106,6 @@ ElementsTable.Dropdown = (function()
 		end
 
 		function Dropdown:BuildDropdownList()
-    if Library.SuppressDropdownBuild then return end
 			local Values = Dropdown.Values
 			local Buttons = {}
 
@@ -3308,10 +3307,7 @@ ElementsTable.Dropdown = (function()
 			Library.Options[Idx] = nil
 		end
 
-		Dropdown:BuildDropdownList()
-		Dropdown:Display()
-
-		local Defaults = {}
+				local Defaults = {}
 
 		if type(Config.Default) == "string" then
 			local Idx = table.find(Dropdown.Values, Config.Default)
@@ -3343,12 +3339,9 @@ ElementsTable.Dropdown = (function()
 				end
 			end
 
-			Dropdown:BuildDropdownList()
-			Dropdown:Display()
-		end
+					end
 
 		Library.Options[Idx] = Dropdown
-    table.insert(Library.Dropdowns, Dropdown)
 		return Dropdown
 	end
 
@@ -5305,18 +5298,13 @@ local SaveManager = {} do
 		if not isfile(file) then return false, "Create Config Save File" end
 
 		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
-		if not success then return false, "decode error" end-- suppress dropdown builds during config load
-Library.SuppressDropdownBuild = true
-for _, option in next, decoded.objects do
-    if self.Parser[option.type] and not self.Ignore[option.idx] then
-        self.Parser[option.type].Load(option.idx, option)
-    end
-end
-Library.SuppressDropdownBuild = false
--- batch rebuild dropdowns
-for _, dd in ipairs(Library.Dropdowns) do
-    dd:BuildDropdownList()
-end
+		if not success then return false, "decode error" end
+
+		for _, option in next, decoded.objects do
+			if self.Parser[option.type] and not self.Ignore[option.idx] then
+				task.spawn(function() self.Parser[option.type].Load(option.idx, option) end)
+			end
+		end
 
 		return true
 	end
