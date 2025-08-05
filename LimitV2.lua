@@ -1,6 +1,6 @@
 
 
---V2. 3
+--V2
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2865,7 +2865,6 @@ ElementsTable.Dropdown = (function()
 		local Dropdown = {
 			Values = Config.Values,
 			Value = Config.Default,
-    local AllValues = table.clone(Dropdown.Values)
 			Multi = Config.Multi,
 			Buttons = {},
 			Opened = false,
@@ -2941,39 +2940,6 @@ ElementsTable.Dropdown = (function()
 			Padding = UDim.new(0, 3),
 		})
 
-    -- Searchable dropdown implementation
-    local SearchBox = New("TextBox", {
-        Size = UDim2.new(1, -10, 0, 30),
-        Position = UDim2.new(0, 5, 0, 5),
-        PlaceholderText = "Search...",
-        ClearTextOnFocus = false,
-        Text = "",
-        TextXAlignment = Enum.TextXAlignment.Left,
-        TextSize = 13,
-        BackgroundTransparency = 0.5,
-        ThemeTag = { TextColor3 = "Text", BackgroundColor3 = "DropdownHolder" },
-    }, {})
-    -- Adjust scrollframe for search box
-    DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -45)
-    DropdownScrollFrame.Position = UDim2.fromOffset(5, 40)
-    -- Filter logic
-    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-        local query = SearchBox.Text:lower()
-        local filtered = {}
-        for _, v in ipairs(AllValues) do
-            if query == "" or v:lower():find(query,1,true) then
-                table.insert(filtered, v)
-            end
-        end
-        Dropdown:SetValues(filtered)
-    end)
-    -- Reset search on open
-    local origOpen = Dropdown.Open
-    function Dropdown:Open()
-        Dropdown.Values = table.clone(AllValues)
-        SearchBox.Text = ""
-        origOpen(self)
-    end
 		local DropdownScrollFrame = New("ScrollingFrame", {
 			Size = UDim2.new(1, -5, 1, -10),
 			Position = UDim2.fromOffset(5, 5),
@@ -5726,5 +5692,3 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
-
-
