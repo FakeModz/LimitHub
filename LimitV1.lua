@@ -1,6 +1,6 @@
 
 
---V2
+--V2. 3
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2863,10 +2863,9 @@ ElementsTable.Dropdown = (function()
 	function Element:New(Idx, Config)
 
 		local Dropdown = {
-
-		    searchQuery = "",
 			Values = Config.Values,
 			Value = Config.Default,
+    local AllValues = table.clone(Dropdown.Values)
 			Multi = Config.Multi,
 			Buttons = {},
 			Opened = false,
@@ -2942,6 +2941,39 @@ ElementsTable.Dropdown = (function()
 			Padding = UDim.new(0, 3),
 		})
 
+    -- Searchable dropdown implementation
+    local SearchBox = New("TextBox", {
+        Size = UDim2.new(1, -10, 0, 30),
+        Position = UDim2.new(0, 5, 0, 5),
+        PlaceholderText = "Search...",
+        ClearTextOnFocus = false,
+        Text = "",
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextSize = 13,
+        BackgroundTransparency = 0.5,
+        ThemeTag = { TextColor3 = "Text", BackgroundColor3 = "DropdownHolder" },
+    }, {})
+    -- Adjust scrollframe for search box
+    DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -45)
+    DropdownScrollFrame.Position = UDim2.fromOffset(5, 40)
+    -- Filter logic
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        local query = SearchBox.Text:lower()
+        local filtered = {}
+        for _, v in ipairs(AllValues) do
+            if query == "" or v:lower():find(query,1,true) then
+                table.insert(filtered, v)
+            end
+        end
+        Dropdown:SetValues(filtered)
+    end)
+    -- Reset search on open
+    local origOpen = Dropdown.Open
+    function Dropdown:Open()
+        Dropdown.Values = table.clone(AllValues)
+        SearchBox.Text = ""
+        origOpen(self)
+    end
 		local DropdownScrollFrame = New("ScrollingFrame", {
 			Size = UDim2.new(1, -5, 1, -10),
 			Position = UDim2.fromOffset(5, 5),
@@ -2999,28 +3031,6 @@ ElementsTable.Dropdown = (function()
 			}),
 		})
 		table.insert(Library.OpenFrames, DropdownHolderCanvas)
-
-table.insert(Library.OpenFrames, DropdownHolderCanvas)-- search bar for dropdown
-table.insert(Library.OpenFrames, DropdownHolderCanvas)local SearchBox = New("TextBox", {
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Parent = DropdownHolderFrame,
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Size = UDim2.new(1, -10, 0, 24),
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Position = UDim2.new(0, 5, 0, 5),
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    PlaceholderText = "Search...",
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Text = "",
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    BackgroundColor3 = Color3.new(1,1,1),
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    TextColor3 = Color3.new(0,0,0),
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    ClearTextOnFocus = false,
-table.insert(Library.OpenFrames, DropdownHolderCanvas)})
-table.insert(Library.OpenFrames, DropdownHolderCanvas)SearchBox.Name = "DropdownSearchBox"
-table.insert(Library.OpenFrames, DropdownHolderCanvas)-- adjust scroll frame for search bar
-table.insert(Library.OpenFrames, DropdownHolderCanvas)DropdownScrollFrame.Position = UDim2.fromOffset(5, 34)
-table.insert(Library.OpenFrames, DropdownHolderCanvas)DropdownScrollFrame.Size = UDim2.new(1, -10, 1, -39)
-table.insert(Library.OpenFrames, DropdownHolderCanvas)-- connect search
-table.insert(Library.OpenFrames, DropdownHolderCanvas)SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Dropdown.searchQuery = SearchBox.Text
-table.insert(Library.OpenFrames, DropdownHolderCanvas)    Dropdown:Refresh()
-table.insert(Library.OpenFrames, DropdownHolderCanvas)end)
-
 
 		local function RecalculateListPosition()
 			local Add = 0
@@ -3094,17 +3104,6 @@ table.insert(Library.OpenFrames, DropdownHolderCanvas)end)
 
 		function Dropdown:Display()
 			local Values = Dropdown.Values
-            -- filter values by searchQuery
-            local sq = Dropdown.searchQuery
-            if sq and sq ~= "" then
-                local filtered = {}
-                for _, v in ipairs(Values) do
-                    if string.find(string.lower(v), string.lower(sq)) then
-                        table.insert(filtered, v)
-                    end
-                end
-                Values = filtered
-            end
 			local Str = ""
 
 			if Config.Multi then
@@ -3377,12 +3376,6 @@ table.insert(Library.OpenFrames, DropdownHolderCanvas)end)
 		end
 
 		Library.Options[Idx] = Dropdown
-            -- Refresh dropdown list based on searchQuery
-            function Dropdown:Refresh()
-                self:BuildDropdownList()
-                self:Display()
-            end
-
 		return Dropdown
 	end
 
@@ -5733,3 +5726,5 @@ else
 end
 
 return Library, SaveManager, InterfaceManager
+
+
