@@ -1,6 +1,6 @@
 
 
---V4
+--V6
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3105,13 +3105,22 @@ ElementsTable.Dropdown = (function()
     -- Tambahan Search Bar
     if not self.SearchBox then
         self.SearchBox = Instance.new("TextBox")
-        self.SearchBox.Size = UDim2.new(1, -10, 0, 20)
+        self.SearchBox.Size = UDim2.new(1, -10, 0, 25)
         self.SearchBox.Position = UDim2.new(0, 5, 0, 5)
         self.SearchBox.PlaceholderText = "Search..."
         self.SearchBox.Text = ""
-        self.SearchBox.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+        self.SearchBox.BackgroundColor3 = Color3.fromRGB(60, 60, 75)
         self.SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+        self.SearchBox.BorderSizePixel = 0
+        self.SearchBox.ClearTextOnFocus = false
+        self.SearchBox.Font = Enum.Font.SourceSans
+        self.SearchBox.TextSize = 14
         self.SearchBox.Parent = self.Holder
+
+        -- Turunkan daftar item supaya tidak menimpa search bar
+        if self.List then
+            self.List.Position = UDim2.new(0, 0, 0, 35)
+        end
 
         -- Event ketika mengetik
         self.SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
