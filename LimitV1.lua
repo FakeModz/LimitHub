@@ -1,6 +1,8 @@
 
 
---V2
+
+
+--V2.1
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -1282,7 +1284,13 @@ Components.Element = (function()
 		end
 
 		function Element:GetTitle()
-			return Element.TitleLabel.Text
+			    -- Refresh dropdown list based on searchQuery
+    function Element:Refresh()
+        self:BuildDropdownList()
+        self:Display()
+    end
+
+return Element.TitleLabel.Text
 		end
 
 		function Element:GetDesc()
@@ -2856,14 +2864,14 @@ ElementsTable.Toggle = (function()
 	return Element
 end)()
 ElementsTable.Dropdown = (function()
-	local Element = {}
+	local Element = {
+    searchQuery = '',}
 	Element.__index = Element
 	Element.__type = "Dropdown"
 
 	function Element:New(Idx, Config)
 
 		local Dropdown = {
-    searchQuery = '',
 			Values = Config.Values,
 			Value = Config.Default,
 			Multi = Config.Multi,
@@ -2999,6 +3007,28 @@ ElementsTable.Dropdown = (function()
 		})
 		table.insert(Library.OpenFrames, DropdownHolderCanvas)
 
+    -- Search bar for filtering dropdown options
+    local SearchBox = New("TextBox", {
+        Parent = DropdownHolderFrame,
+        Size = UDim2.new(1, -10, 0, 24),
+        Position = UDim2.new(0, 5, 0, 5),
+        PlaceholderText = "Search...",
+        Text = "",
+        BackgroundTransparency = 0.5,
+        ClearTextOnFocus = false,
+    })
+    SearchBox.Name = "DropdownSearchBox"
+    -- Adjust scroll frame to accommodate search bar
+    DropdownScrollFrame.Position = UDim2.fromOffset(5, 34)
+    DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -39)
+    -- Update dropdown on search input
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        Dropdown.searchQuery = SearchBox.Text
+        Dropdown:Refresh()
+    end)
+
+    
+
 		local function RecalculateListPosition()
 			local Add = 0
 			if Camera.ViewportSize.Y - DropdownInner.AbsolutePosition.Y < DropdownHolderCanvas.AbsoluteSize.Y - 5 then
@@ -3012,7 +3042,8 @@ ElementsTable.Dropdown = (function()
 		end
 
 		local ListSizeX = 0
-		local function RecalculateListSize()
+		local function         end
+        RecalculateListSize()
 			if #Dropdown.Values > 10 then
 				DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, 392)
 			else
@@ -3075,6 +3106,7 @@ ElementsTable.Dropdown = (function()
 
 			if Config.Multi then
 				for Idx, Value in next, Values do
+        if Dropdown.searchQuery == '' or string.find(string.lower(Value), string.lower(Dropdown.searchQuery)) then
 					if Dropdown.Value[Value] then
 						Str = Str .. Value .. ", "
 					end
@@ -5692,12 +5724,4 @@ else
 	Fluent = Library
 end
 
--- Refresh dropdown list based on searchQuery
-function Dropdown:Refresh()
-    self:BuildDropdownList()
-    self:Display()
-end
-
 return Library, SaveManager, InterfaceManager
-
-
