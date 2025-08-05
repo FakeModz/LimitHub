@@ -1,6 +1,6 @@
 
 
---V6
+--V7
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3051,6 +3051,27 @@ ElementsTable.Dropdown = (function()
 
 		local ScrollFrame = self.ScrollFrame
 		function Dropdown:Open()
+    -- Tambahan SearchBar
+    if not self.SearchBox then
+        self.SearchBox = Instance.new('TextBox')
+        self.SearchBox.Size = UDim2.new(1, -10, 0, 25)
+        self.SearchBox.Position = UDim2.new(0, 5, 0, 5)
+        self.SearchBox.PlaceholderText = 'Search...'
+        self.SearchBox.Text = ''
+        self.SearchBox.BackgroundColor3 = Color3.fromRGB(90, 60, 120)
+        self.SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+        self.SearchBox.BorderSizePixel = 0
+        self.SearchBox.ClearTextOnFocus = false
+        self.SearchBox.Font = Enum.Font.SourceSans
+        self.SearchBox.TextSize = 14
+        self.SearchBox.Parent = self.Main or self.Holder or self
+        
+        -- Event filter
+        self.SearchBox:GetPropertyChangedSignal('Text'):Connect(function()
+            self:BuildDropdownList()
+        end)
+    end
+
 			Dropdown.Opened = true
 			ScrollFrame.ScrollingEnabled = false
 			DropdownHolderCanvas.Visible = true
@@ -3101,43 +3122,18 @@ ElementsTable.Dropdown = (function()
 		end
 
 		function Dropdown:BuildDropdownList()
-
-    -- Tambahan Search Bar
-    if not self.SearchBox then
-        self.SearchBox = Instance.new("TextBox")
-        self.SearchBox.Size = UDim2.new(1, -10, 0, 25)
-        self.SearchBox.Position = UDim2.new(0, 5, 0, 5)
-        self.SearchBox.PlaceholderText = "Search..."
-        self.SearchBox.Text = ""
-        self.SearchBox.BackgroundColor3 = Color3.fromRGB(60, 60, 75)
-        self.SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-        self.SearchBox.BorderSizePixel = 0
-        self.SearchBox.ClearTextOnFocus = false
-        self.SearchBox.Font = Enum.Font.SourceSans
-        self.SearchBox.TextSize = 14
-        self.SearchBox.Parent = self.Holder
-
-        -- Turunkan daftar item supaya tidak menimpa search bar
-        if self.List then
-            self.List.Position = UDim2.new(0, 0, 0, 35)
+    -- Filter list berdasarkan SearchBox
+    local originalValues = self.Values or {}
+    local filterText = ''
+    if self.SearchBox then filterText = string.lower(self.SearchBox.Text or '') end
+    local filteredValues = {}
+    for _, item in ipairs(originalValues) do
+        if filterText == '' or string.find(string.lower(tostring(item)), filterText) then
+            table.insert(filteredValues, item)
         end
-
-        -- Event ketika mengetik
-        self.SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-            local text = string.lower(self.SearchBox.Text)
-            local filtered = {}
-            for _, item in ipairs(self.Values or {}) do
-                if string.find(string.lower(tostring(item)), text) then
-                    table.insert(filtered, item)
-                end
-            end
-            self:BuildDropdownList(filtered) -- panggil ulang dengan list terfilter
-        end)
-    else
-        self.SearchBox.Text = ""
     end
+    self.Values = filteredValues
 
-    local offsetY = 30 -- jarak vertikal dropdown list dari search box
 			local Values = Dropdown.Values
 			local Buttons = {}
 
