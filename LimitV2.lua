@@ -1,6 +1,6 @@
 
 
---V2.5
+--V2
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2957,8 +2957,36 @@ ElementsTable.Dropdown = (function()
 		}, {
 			DropdownListLayout,
 		})
-		-- Searchable dropdown implementation
+		local DropdownHolderFrame = New("Frame", {
+			Size = UDim2.fromScale(1, 0.6),
+			ThemeTag = {
+				BackgroundColor3 = "DropdownHolder",
+			},
+		}, {
+			DropdownScrollFrame,
+			New("UICorner", {
+				CornerRadius = UDim.new(0, 7),
+			}),
+			New("UIStroke", {
+				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+				ThemeTag = {
+					Color = "DropdownBorder",
+				},
+			}),
+			New("ImageLabel", {
+				BackgroundTransparency = 1,
+				Image = "http://www.roblox.com/asset/?id=5554236805",
+				ScaleType = Enum.ScaleType.Slice,
+				SliceCenter = Rect.new(23, 23, 277, 277),
+				Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(30, 30),
+				Position = UDim2.fromOffset(-15, -15),
+				ImageColor3 = Color3.fromRGB(0, 0, 0),
+				ImageTransparency = 0.1,
+			}),
+		})
+		-- Search bar for dropdown
 		local SearchBox = New("TextBox", {
+		    Parent = DropdownHolderFrame,
 		    Size = UDim2.new(1, -10, 0, 30),
 		    Position = UDim2.new(0, 5, 0, 5),
 		    PlaceholderText = "Search...",
@@ -2968,12 +2996,13 @@ ElementsTable.Dropdown = (function()
 		    TextSize = 13,
 		    BackgroundTransparency = 0.5,
 		    ThemeTag = { TextColor3 = "Text", BackgroundColor3 = "DropdownHolder" },
+		    ZIndex = 5,
 		}, {})
-		
+
 		-- Adjust scrollframe for search box
-		DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -45)
-		DropdownScrollFrame.Position = UDim2.fromOffset(5, 40)
-		
+		DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -40)
+		DropdownScrollFrame.Position = UDim2.new(0, 0, 0, 35)
+
 		-- Filter logic
 		SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
 		    local query = SearchBox.Text:lower()
@@ -2985,7 +3014,7 @@ ElementsTable.Dropdown = (function()
 		    end
 		    Dropdown:SetValues(filtered)
 		end)
-		
+
 		-- Reset search on open
 		local origOpen = Dropdown.Open
 		function Dropdown:Open()
@@ -2993,9 +3022,7 @@ ElementsTable.Dropdown = (function()
 		    SearchBox.Text = ""
 		    origOpen(self)
 		end
-		
 
-		local DropdownHolderFrame = New("Frame", {
 			Size = UDim2.fromScale(1, 0.6),
 			ThemeTag = {
 				BackgroundColor3 = "DropdownHolder",
