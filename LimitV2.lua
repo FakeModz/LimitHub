@@ -1,7 +1,6 @@
 
 
-
---V3
+--V4
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2872,7 +2871,6 @@ ElementsTable.Dropdown = (function()
 			Type = "Dropdown",
 			Callback = Config.Callback or function() end,
 		}
-		local AllValues = table.clone(Dropdown.Values)
 
 		if Dropdown.Multi and Config.AllowNull then
 			Dropdown.Value = {}
@@ -2958,75 +2956,8 @@ ElementsTable.Dropdown = (function()
 		}, {
 			DropdownListLayout,
 		})
+
 		local DropdownHolderFrame = New("Frame", {
-			Size = UDim2.fromScale(1, 0.6),
-			ThemeTag = {
-				BackgroundColor3 = "DropdownHolder",
-			},
-		}, {
-			DropdownScrollFrame,
-			New("UICorner", {
-				CornerRadius = UDim.new(0, 7),
-			}),
-			New("UIStroke", {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				ThemeTag = {
-					Color = "DropdownBorder",
-				},
-			}),
-			New("ImageLabel", {
-				BackgroundTransparency = 1,
-				Image = "http://www.roblox.com/asset/?id=5554236805",
-				ScaleType = Enum.ScaleType.Slice,
-				SliceCenter = Rect.new(23, 23, 277, 277),
-				Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(30, 30),
-				Position = UDim2.fromOffset(-15, -15),
-				ImageColor3 = Color3.fromRGB(0, 0, 0),
-				ImageTransparency = 0.1,
-			}),
-		})
-		-- Search bar for dropdown
-		local SearchBox = New("TextBox", {
-		    Parent = DropdownHolderFrame,
-		    Size = UDim2.new(1, -10, 0, 30),
-		    Position = UDim2.new(0, 5, 0, 5),
-		    PlaceholderText = "Search...",
-		    ClearTextOnFocus = false,
-		    Text = "",
-		    TextXAlignment = Enum.TextXAlignment.Left,
-		    TextSize = 13,
-		    BackgroundTransparency = 0.5,
-		    ThemeTag = { TextColor3 = "Text", BackgroundColor3 = "DropdownHolder" },
-		    ZIndex = 5,
-		}, {})
-
-		-- Adjust scrollframe for search box
-		DropdownScrollFrame.Size = UDim2.new(1, -5, 1, -40)
-		DropdownScrollFrame.Position = UDim2.new(0, 0, 0, 35)
-
-		-- Filter logic
-		-- Filter logic (improved)
-		SearchBox.Changed:Connect(function(prop)
-		    if prop == "Text" then
-		        local query = SearchBox.Text:lower()
-		        local filtered = {}
-		        for _, v in ipairs(AllValues) do
-		            if query == "" or v:lower():find(query, 1, true) then
-		                table.insert(filtered, v)
-		            end
-		        end
-		        Dropdown:SetValues(filtered)
-		    end
-		end)
-
-		-- Reset search on open
-		local origOpen = Dropdown.Open
-		function Dropdown:Open()
-		    Dropdown.Values = table.clone(AllValues)
-		    SearchBox.Text = ""
-		    origOpen(self)
-		end
-
 			Size = UDim2.fromScale(1, 0.6),
 			ThemeTag = {
 				BackgroundColor3 = "DropdownHolder",
@@ -3170,6 +3101,34 @@ ElementsTable.Dropdown = (function()
 		end
 
 		function Dropdown:BuildDropdownList()
+
+    -- Tambahan Search Bar
+    if not self.SearchBox then
+        self.SearchBox = Instance.new("TextBox")
+        self.SearchBox.Size = UDim2.new(1, -10, 0, 20)
+        self.SearchBox.Position = UDim2.new(0, 5, 0, 5)
+        self.SearchBox.PlaceholderText = "Search..."
+        self.SearchBox.Text = ""
+        self.SearchBox.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+        self.SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+        self.SearchBox.Parent = self.Holder
+
+        -- Event ketika mengetik
+        self.SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+            local text = string.lower(self.SearchBox.Text)
+            local filtered = {}
+            for _, item in ipairs(self.Values or {}) do
+                if string.find(string.lower(tostring(item)), text) then
+                    table.insert(filtered, item)
+                end
+            end
+            self:BuildDropdownList(filtered) -- panggil ulang dengan list terfilter
+        end)
+    else
+        self.SearchBox.Text = ""
+    end
+
+    local offsetY = 30 -- jarak vertikal dropdown list dari search box
 			local Values = Dropdown.Values
 			local Buttons = {}
 
