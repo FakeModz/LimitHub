@@ -1,6 +1,6 @@
 
 
---V16
+--V17
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2943,7 +2943,6 @@ ElementsTable.Dropdown = (function()
 		local DropdownScrollFrame = New("ScrollingFrame", {
 			Size = UDim2.new(1, -5, 1, -10),
 			Position = UDim2.fromOffset(5, 0),
-
 			BackgroundTransparency = 1,
 			BottomImage = "rbxassetid://6889812791",
 			MidImage = "rbxassetid://6889812721",
@@ -2961,8 +2960,8 @@ ElementsTable.Dropdown = (function()
 
             -- Create persistent search bar
             Dropdown.SearchBar = Instance.new("TextBox")
-            Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)
-            Dropdown.SearchBar.Position = UDim2.new(0, 5, 0, 0)
+    Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)  -- width minus margins, height 28
+    Dropdown.SearchBar.Position = UDim2.fromOffset(5, 0)  -- top align to dropdown
             Dropdown.SearchBar.PlaceholderText = "Search..."
             Dropdown.SearchBar.Text = ""
             Dropdown.SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
@@ -2986,11 +2985,13 @@ ElementsTable.Dropdown = (function()
                 local query = string.lower(Dropdown.SearchBar.Text)
                 for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
                     if element:IsA("TextButton") then
-                        element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
-                        -- recalc scroll & list, reset position
-                        RecalculateCanvasSize()
-                        RecalculateListSize()
-                        DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
+                        -- Prefix match filter
+                        local textLower = string.lower(element.Text)
+                        if query == "" or textLower:sub(1, #query) == query then
+                            element.Visible = true
+                        else
+                            element.Visible = false
+                        end
                     end
                 end
             end
