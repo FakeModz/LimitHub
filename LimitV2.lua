@@ -1,6 +1,6 @@
 
 
---V18
+--V20
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2967,7 +2967,6 @@ ElementsTable.Dropdown = (function()
             Dropdown.SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
             Dropdown.SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
             Dropdown.SearchBar.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-            Dropdown.SearchBar.TextYAlignment = Enum.TextYAlignment.Top  -- move placeholder up
             Dropdown.SearchBar.BorderSizePixel = 0
             Dropdown.SearchBar.ClearTextOnFocus = false
             Dropdown.SearchBar.MultiLine = false
@@ -2986,13 +2985,18 @@ ElementsTable.Dropdown = (function()
                 local query = string.lower(Dropdown.SearchBar.Text)
                 for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
                     if element:IsA("TextButton") then
-                        element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
-                        -- update scroll size and reset position
-                        RecalculateCanvasSize()
-                        RecalculateListSize()
-                        DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
+                        local textLower = string.lower(element.Text)
+                        if query == "" or textLower:sub(1, #query) == query then
+                            element.Visible = true
+                        else
+                            element.Visible = false
+                        end
                     end
                 end
+                -- recalc sizes & reset scroll
+                RecalculateCanvasSize()
+                RecalculateListSize()
+                DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
             end
             Dropdown.SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
     		local DropdownHolderFrame = New("Frame", {
