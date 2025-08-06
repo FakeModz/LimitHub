@@ -1,6 +1,6 @@
 
 
---V8
+--V9
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3101,51 +3101,7 @@ ElementsTable.Dropdown = (function()
 		end
 
 		function Dropdown:BuildDropdownList()
-
-    -- ==== Search Bar di atas daftar dropdown ====
-    if not self.SearchBox then
-        self.SearchBox = Instance.new("TextBox")
-        self.SearchBox.Size = UDim2.new(1, -10, 0, 25)
-        self.SearchBox.Position = UDim2.new(0, 5, 0, 5)
-        self.SearchBox.PlaceholderText = "Search..."
-        self.SearchBox.Text = ""
-        self.SearchBox.BackgroundColor3 = Color3.fromRGB(60, 60, 75)
-        self.SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-        self.SearchBox.BorderSizePixel = 0
-        self.SearchBox.ClearTextOnFocus = false
-        self.SearchBox.Font = Enum.Font.SourceSans
-        self.SearchBox.TextSize = 14
-        -- Pastikan parentnya adalah frame utama dropdown
-        if self.Holder then
-            self.SearchBox.Parent = self.Holder
-        elseif self.Main then
-            self.SearchBox.Parent = self.Main
-        end
-
-        -- Event real-time filter
-        self.SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-            self:BuildDropdownList()
-        end)
-    end
-
-    local filterText = ""
-    if self.SearchBox then
-        filterText = string.lower(self.SearchBox.Text or "")
-    end
-
-    -- Filter item
-    if self.Values then
-        local filtered = {}
-        for _, item in ipairs(self.Values) do
-            if filterText == "" or string.find(string.lower(tostring(item)), filterText) then
-                table.insert(filtered, item)
-            end
-        end
-        self.Values = filtered
-    end
-
-    local offsetY = 30 -- Geser daftar item ke bawah search bar
-    			local Values = Dropdown.Values
+			local Values = Dropdown.Values
 			local Buttons = {}
 
 			for _, Element in next, DropdownScrollFrame:GetChildren() do
@@ -3155,6 +3111,47 @@ ElementsTable.Dropdown = (function()
 			end
 
 			local Count = 0
+
+            -- Create Search Bar
+            local SearchBar = Instance.new("TextBox")
+            SearchBar.Size = UDim2.new(1, -10, 0, 28)
+            SearchBar.Position = UDim2.new(0, 5, 0, 0)
+            SearchBar.PlaceholderText = "Search..."
+            SearchBar.Text = ""
+            SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
+            SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+            SearchBar.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+            SearchBar.BorderSizePixel = 0
+            SearchBar.ClearTextOnFocus = false
+            SearchBar.Parent = DropdownScrollFrame
+
+            local originalValues = table.clone(Dropdown.Values)
+
+            -- Filter function
+            local function applyFilter()
+                local query = string.lower(SearchBar.Text)
+                Dropdown.Values = {}
+                if query == "" then
+                    Dropdown.Values = table.clone(originalValues)
+                else
+                    for _, v in ipairs(originalValues) do
+                        if string.find(string.lower(v), query) then
+                            table.insert(Dropdown.Values, v)
+                        end
+                    end
+                end
+                -- Rebuild list after filtering
+                Dropdown:BuildDropdownList()
+            end
+
+            -- Real-time filtering
+            SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
+
+            -- Add padding so list doesn't overlap search bar
+            local padding = Instance.new("UIPadding")
+            padding.PaddingTop = UDim.new(0, 30)
+            padding.Parent = DropdownScrollFrame
+
 
 			for Idx, Value in next, Values do
 				local Table = {}
