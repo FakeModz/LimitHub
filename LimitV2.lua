@@ -1,6 +1,6 @@
 
 
---V10
+--V11
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2957,7 +2957,40 @@ ElementsTable.Dropdown = (function()
 			DropdownListLayout,
 		})
 
-		local DropdownHolderFrame = New("Frame", {
+
+            -- Create persistent search bar
+            Dropdown.SearchBar = Instance.new("TextBox")
+            Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)
+            Dropdown.SearchBar.Position = UDim2.new(0, 5, 0, 0)
+            Dropdown.SearchBar.PlaceholderText = "Search..."
+            Dropdown.SearchBar.Text = ""
+            Dropdown.SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
+            Dropdown.SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Dropdown.SearchBar.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+            Dropdown.SearchBar.BorderSizePixel = 0
+            Dropdown.SearchBar.ClearTextOnFocus = false
+            Dropdown.SearchBar.MultiLine = false
+            Dropdown.SearchBar.Selectable = true
+            Dropdown.SearchBar.TextEditable = true
+            Dropdown.SearchBar.ZIndex = 10
+            Dropdown.SearchBar.Parent = DropdownScrollFrame
+
+            -- Padding so list starts below search bar
+            local padding = Instance.new("UIPadding")
+            padding.PaddingTop = UDim.new(0, 35)
+            padding.Parent = DropdownScrollFrame
+
+            -- Filtering function
+            local function applyFilter()
+                local query = string.lower(Dropdown.SearchBar.Text)
+                for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
+                    if element:IsA("TextButton") then
+                        element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
+                    end
+                end
+            end
+            Dropdown.SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
+    		local DropdownHolderFrame = New("Frame", {
 			Size = UDim2.fromScale(1, 0.6),
 			ThemeTag = {
 				BackgroundColor3 = "DropdownHolder",
@@ -3105,10 +3138,12 @@ ElementsTable.Dropdown = (function()
 			local Buttons = {}
 
 			for _, Element in next, DropdownScrollFrame:GetChildren() do
-				if not Element:IsA("UIListLayout") then
-					Element:Destroy()
-				end
-			end
+                if not Element:IsA("UIListLayout") 
+                   and Element ~= Dropdown.SearchBar 
+                   and not Element:IsA("UIPadding") then
+                    Element:Destroy()
+                end
+            end
 
 			local Count = 0
 
