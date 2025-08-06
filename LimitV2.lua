@@ -1,6 +1,6 @@
 
 
---V9
+--V10
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -3111,47 +3111,6 @@ ElementsTable.Dropdown = (function()
 			end
 
 			local Count = 0
-
-            -- Create Search Bar
-            local SearchBar = Instance.new("TextBox")
-            SearchBar.Size = UDim2.new(1, -10, 0, 28)
-            SearchBar.Position = UDim2.new(0, 5, 0, 0)
-            SearchBar.PlaceholderText = "Search..."
-            SearchBar.Text = ""
-            SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
-            SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
-            SearchBar.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-            SearchBar.BorderSizePixel = 0
-            SearchBar.ClearTextOnFocus = false
-            SearchBar.Parent = DropdownScrollFrame
-
-            local originalValues = table.clone(Dropdown.Values)
-
-            -- Filter function
-            local function applyFilter()
-                local query = string.lower(SearchBar.Text)
-                Dropdown.Values = {}
-                if query == "" then
-                    Dropdown.Values = table.clone(originalValues)
-                else
-                    for _, v in ipairs(originalValues) do
-                        if string.find(string.lower(v), query) then
-                            table.insert(Dropdown.Values, v)
-                        end
-                    end
-                end
-                -- Rebuild list after filtering
-                Dropdown:BuildDropdownList()
-            end
-
-            -- Real-time filtering
-            SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
-
-            -- Add padding so list doesn't overlap search bar
-            local padding = Instance.new("UIPadding")
-            padding.PaddingTop = UDim.new(0, 30)
-            padding.Parent = DropdownScrollFrame
-
 
 			for Idx, Value in next, Values do
 				local Table = {}
