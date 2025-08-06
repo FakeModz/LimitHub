@@ -1,6 +1,6 @@
 
 
---V15
+--V16
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2942,7 +2942,8 @@ ElementsTable.Dropdown = (function()
 
 		local DropdownScrollFrame = New("ScrollingFrame", {
 			Size = UDim2.new(1, -5, 1, -10),
-            Position = UDim2.fromOffset(5, 0), -- remove top gap
+			Position = UDim2.fromOffset(5, 0),
+
 			BackgroundTransparency = 1,
 			BottomImage = "rbxassetid://6889812791",
 			MidImage = "rbxassetid://6889812721",
@@ -2974,11 +2975,10 @@ ElementsTable.Dropdown = (function()
             Dropdown.SearchBar.TextEditable = true
             Dropdown.SearchBar.ZIndex = 10
             Dropdown.SearchBar.Parent = DropdownScrollFrame
-            Dropdown.SearchBar.TextYAlignment = Enum.TextYAlignment.Top -- align text at top
 
             -- Padding so list starts below search bar
             local padding = Instance.new("UIPadding")
-            padding.PaddingTop = UDim.new(0, 28) -- snug under search bar
+            padding.PaddingTop = UDim.new(0, 28)  -- snug under search bar
             padding.Parent = DropdownScrollFrame
 
             -- Filtering function
@@ -2987,7 +2987,7 @@ ElementsTable.Dropdown = (function()
                 for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
                     if element:IsA("TextButton") then
                         element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
-                        -- recalc scroll and reset to top
+                        -- recalc scroll & list, reset position
                         RecalculateCanvasSize()
                         RecalculateListSize()
                         DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
