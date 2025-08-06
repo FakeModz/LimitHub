@@ -1,6 +1,6 @@
 
 
---V55
+--V60
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2961,7 +2961,7 @@ ElementsTable.Dropdown = (function()
             -- Create persistent search bar
             Dropdown.SearchBar = Instance.new("TextBox")
             Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)
-            Dropdown.SearchBar.Position = UDim2.new(0, 5, 0, 0)
+            Dropdown.SearchBar.Position = UDim2.new(0, 0, 0, 0)
             Dropdown.SearchBar.PlaceholderText = "Search..."
             Dropdown.SearchBar.Text = ""
             Dropdown.SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
@@ -2977,7 +2977,7 @@ ElementsTable.Dropdown = (function()
 
             -- Padding so list starts below search bar
             local padding = Instance.new("UIPadding")
-            padding.PaddingTop = UDim.new(0, 28)
+            padding.PaddingTop = UDim.new(0, 0)
             padding.Parent = DropdownScrollFrame
 
             
