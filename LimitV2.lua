@@ -1,6 +1,6 @@
 
 
---V20
+--V22
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2877,7 +2877,49 @@ ElementsTable.Dropdown = (function()
 		end
 
 		local DropdownFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
-		DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
+		
+    -- Create Search Box for filtering dropdown values
+    local SearchBox = Instance.new("TextBox")
+    SearchBox.PlaceholderText = "Search..."
+    SearchBox.Size = UDim2.new(1, -10, 0, 24)
+    SearchBox.Position = UDim2.new(0, 5, 0, 5)
+    SearchBox.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+    SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SearchBox.ClearTextOnFocus = false
+    SearchBox.Parent = DropdownFrame.Frame
+
+    -- Store original values for filtering
+    Dropdown.OriginalValues = {}
+    for _, v in ipairs(Dropdown.Values) do
+        table.insert(Dropdown.OriginalValues, v)
+    end
+
+    -- Function to refresh dropdown buttons based on search query
+    local function RefreshDropdown(query)
+        -- Clear old buttons
+        for _, btn in ipairs(Dropdown.Buttons) do
+            btn:Destroy()
+        end
+        Dropdown.Buttons = {}
+
+        for _, val in ipairs(Dropdown.OriginalValues) do
+            if query == "" or string.sub(string.lower(val), 1, #query) == query then
+                -- Use existing method to add dropdown button
+                if Dropdown.AddValue then
+                    Dropdown:AddValue(val)
+                elseif Library and Library.AddDropdownValue then
+                    Library:AddDropdownValue(Dropdown, val)
+                end
+            end
+        end
+    end
+
+    -- Attach filter event
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        local q = string.lower(SearchBox.Text)
+        RefreshDropdown(q)
+    end)
+    DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
 
 		Dropdown.SetTitle = DropdownFrame.SetTitle
 		Dropdown.SetDesc = DropdownFrame.SetDesc
