@@ -1,6 +1,6 @@
 
 
---V17
+--V18
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2960,13 +2960,14 @@ ElementsTable.Dropdown = (function()
 
             -- Create persistent search bar
             Dropdown.SearchBar = Instance.new("TextBox")
-    Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)  -- width minus margins, height 28
-    Dropdown.SearchBar.Position = UDim2.fromOffset(5, 0)  -- top align to dropdown
+            Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)
+            Dropdown.SearchBar.Position = UDim2.new(0, 5, 0, 0)
             Dropdown.SearchBar.PlaceholderText = "Search..."
             Dropdown.SearchBar.Text = ""
             Dropdown.SearchBar.BackgroundColor3 = Themes.LimitHub.DropdownHolder
             Dropdown.SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
             Dropdown.SearchBar.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+            Dropdown.SearchBar.TextYAlignment = Enum.TextYAlignment.Top  -- move placeholder up
             Dropdown.SearchBar.BorderSizePixel = 0
             Dropdown.SearchBar.ClearTextOnFocus = false
             Dropdown.SearchBar.MultiLine = false
@@ -2977,7 +2978,7 @@ ElementsTable.Dropdown = (function()
 
             -- Padding so list starts below search bar
             local padding = Instance.new("UIPadding")
-            padding.PaddingTop = UDim.new(0, 28)  -- snug under search bar
+            padding.PaddingTop = UDim.new(0, 28)
             padding.Parent = DropdownScrollFrame
 
             -- Filtering function
@@ -2985,13 +2986,11 @@ ElementsTable.Dropdown = (function()
                 local query = string.lower(Dropdown.SearchBar.Text)
                 for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
                     if element:IsA("TextButton") then
-                        -- Prefix match filter
-                        local textLower = string.lower(element.Text)
-                        if query == "" or textLower:sub(1, #query) == query then
-                            element.Visible = true
-                        else
-                            element.Visible = false
-                        end
+                        element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
+                        -- update scroll size and reset position
+                        RecalculateCanvasSize()
+                        RecalculateListSize()
+                        DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
                     end
                 end
             end
