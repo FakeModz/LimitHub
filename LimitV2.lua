@@ -1,6 +1,6 @@
 
 
---V11
+--V12
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2958,7 +2958,7 @@ ElementsTable.Dropdown = (function()
 		})
 
 
-            -- Create persistent search bar
+            -- Persistent Search Bar at top
             Dropdown.SearchBar = Instance.new("TextBox")
             Dropdown.SearchBar.Size = UDim2.new(1, -10, 0, 28)
             Dropdown.SearchBar.Position = UDim2.new(0, 5, 0, 0)
@@ -2975,21 +2975,16 @@ ElementsTable.Dropdown = (function()
             Dropdown.SearchBar.ZIndex = 10
             Dropdown.SearchBar.Parent = DropdownScrollFrame
 
-            -- Padding so list starts below search bar
+            -- Padding for list below search bar
             local padding = Instance.new("UIPadding")
             padding.PaddingTop = UDim.new(0, 35)
             padding.Parent = DropdownScrollFrame
 
-            -- Filtering function
-            local function applyFilter()
-                local query = string.lower(Dropdown.SearchBar.Text)
-                for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
-                    if element:IsA("TextButton") then
-                        element.Visible = (query == "" or string.find(string.lower(element.Text), query, 1, true))
-                    end
-                end
-            end
-            Dropdown.SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
+            -- Store search text
+            Dropdown.SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
+                Dropdown.SearchQuery = string.lower(Dropdown.SearchBar.Text)
+                Dropdown:BuildDropdownList()
+            end)
     		local DropdownHolderFrame = New("Frame", {
 			Size = UDim2.fromScale(1, 0.6),
 			ThemeTag = {
@@ -3138,17 +3133,20 @@ ElementsTable.Dropdown = (function()
 			local Buttons = {}
 
 			for _, Element in next, DropdownScrollFrame:GetChildren() do
-                if not Element:IsA("UIListLayout") 
-                   and Element ~= Dropdown.SearchBar 
+                if not Element:IsA("UIListLayout")
+                   and Element ~= Dropdown.SearchBar
                    and not Element:IsA("UIPadding") then
                     Element:Destroy()
                 end
             end
 
 			local Count = 0
+            local query = Dropdown.SearchQuery or ""
+    
 
 			for Idx, Value in next, Values do
-				local Table = {}
+                if query == "" or string.find(string.lower(Value), query, 1, true) then
+                    local Table = {}
 
 				Count = Count + 1
 
