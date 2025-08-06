@@ -1,6 +1,6 @@
 
 
---V50
+--V55
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2985,9 +2985,19 @@ ElementsTable.Dropdown = (function()
             local function applyFilter()
                 if not Dropdown or not Dropdown.SearchBar or not DropdownScrollFrame then return end
                 local query = string.lower(Dropdown.SearchBar.Text or "")
+
                 for _, element in ipairs(DropdownScrollFrame:GetChildren()) do
                     if element:IsA("TextButton") then
-                        local textLower = string.lower(element.Text or "")
+                        -- Prefer reading from ButtonLabel child if available
+                        local label = element:FindFirstChild("ButtonLabel")
+                        local textValue = ""
+                        if label and label:IsA("TextLabel") then
+                            textValue = label.Text or ""
+                        else
+                            textValue = element.Text or ""
+                        end
+
+                        local textLower = string.lower(textValue)
                         if query == "" or string.find(textLower, query, 1, true) then
                             element.Visible = true
                         else
@@ -2995,6 +3005,7 @@ ElementsTable.Dropdown = (function()
                         end
                     end
                 end
+
                 if typeof(RecalculateListSize) == "function" then
                     RecalculateListSize()
                 end
