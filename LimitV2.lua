@@ -1,6 +1,6 @@
 
 
---V30
+--V35
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2998,7 +2998,7 @@ ElementsTable.Dropdown = (function()
                 RecalculateListSize()
                 DropdownScrollFrame.CanvasPosition = Vector2.new(0, 0)
             end
-            Dropdown.SearchBar:GetPropertyChangedSignal("Text"):Connect(applyFilter)
+            -- moved binding for applyFilter later after button creation
     		local DropdownHolderFrame = New("Frame", {
 			Size = UDim2.fromScale(1, 0.6),
 			ThemeTag = {
