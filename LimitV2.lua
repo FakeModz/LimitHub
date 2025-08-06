@@ -1,6 +1,6 @@
 
 
---V60
+--V70
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -2974,6 +2974,28 @@ ElementsTable.Dropdown = (function()
             Dropdown.SearchBar.TextEditable = true
             Dropdown.SearchBar.ZIndex = 10
             Dropdown.SearchBar.Parent = DropdownScrollFrame
+
+            -- Beautify SearchBar
+            Dropdown.SearchBar.BackgroundColor3 = Color3.fromRGB(40, 30, 60)
+            Dropdown.SearchBar.BackgroundTransparency = 0.15
+            Dropdown.SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Dropdown.SearchBar.PlaceholderColor3 = Color3.fromRGB(180, 180, 200)
+
+            local sbCorner = Instance.new("UICorner")
+            sbCorner.CornerRadius = UDim.new(0, 6)
+            sbCorner.Parent = Dropdown.SearchBar
+
+            local sbStroke = Instance.new("UIStroke")
+            sbStroke.Thickness = 1
+            sbStroke.Color = Color3.fromRGB(120, 0, 200)
+            sbStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+            sbStroke.Parent = Dropdown.SearchBar
+
+            local sbPadding = Instance.new("UIPadding")
+            sbPadding.PaddingLeft = UDim.new(0, 6)
+            sbPadding.PaddingRight = UDim.new(0, 4)
+            sbPadding.Parent = Dropdown.SearchBar
+    
 
             -- Padding so list starts below search bar
             local padding = Instance.new("UIPadding")
