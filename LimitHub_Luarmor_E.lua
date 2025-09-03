@@ -22,6 +22,12 @@ api.script_id = "6f0b98e1fcdc5802e05d12fb3160357e"
 elseif game.PlaceId == 121864768012064 then
 --Fish It
 api.script_id = "22dac3b931760a99f1420bba777d5818"
+elseif game.PlaceId == 126509999114328 then 
+--99 Night in Forest
+api.script_id = "26957bc761782f0edfbab1098b798213"
+elseif game.PlaceId == 79546208627805 then
+--99 Night in Forest Lobby
+Notify("[Lobby] Please Enter in Game First")
 else
 Notif("Game Not Supported") 
 return
@@ -32,7 +38,6 @@ local KeyLimit = "LimitHubKey.txt"
 local screenGui = Instance.new("ScreenGui", game.CoreGui)
 
 
--- Validasi key Luarmor
 local function checkKeyLuarmor(key)
     local status = api.check_key(key)
     print(status)
@@ -56,7 +61,7 @@ local function checkKeyLuarmor(key)
     return false
 end
 
--- Cek apakah ada key tersimpan & valid
+
 local function keyIsSaved()
     if isfile(KeyLimit) then
         local savedKey = readfile(KeyLimit)
@@ -81,7 +86,7 @@ local function keyIsSaved()
     return false
 end
 
--- Buat UI Key System
+
 screenGui.Name = "KeyUI"
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.ResetOnSpawn = false
@@ -189,7 +194,7 @@ footer.TextTransparency = 0.3
 footer.TextYAlignment = Enum.TextYAlignment.Center
 footer.TextWrapped = false
 
--- Tombol fungsional
+
 lootlabsBtn.MouseButton1Click:Connect(function()
     setclipboard(Lootlabs)
     lootlabsBtn.Text = "Copied!"
@@ -221,5 +226,4 @@ checkKey.MouseButton1Click:Connect(function()
     end
 end)
 
--- Eksekusi auto load key
 keyIsSaved()
