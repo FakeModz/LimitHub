@@ -19,10 +19,10 @@ elseif game.PlaceId == 109983668079237 or game.PlaceId == 96342491571673 then
 api.script_id = "2fba8939469e00f99ecb49e540a3da35"
 elseif game.PlaceId == 121864768012064 then
 --Fish It
-api.script_id = "22dac3b931760a99f1420bba777d5818"
+api.script_id = "6308a1792cfa61e2a72f914dd8af5128"
 elseif game.PlaceId == 126509999114328 then 
 --99 Night in Forest
-api.script_id = "26957bc761782f0edfbab1098b798213"
+api.script_id = "f833e70d7d8c8e8f7274cffe0177834c"
 elseif game.PlaceId == 79546208627805 then
 --99 Night in Forest Lobby
 Notify("[Lobby] Please Enter in Game First")
@@ -37,7 +37,7 @@ local KeyLimit = "LimitHub_Premium_Key.txt"
 local screenGui = Instance.new("ScreenGui", game.CoreGui)
 
 
-
+-- Validasi key Luarmor
 local function checkKeyLuarmor(key)
     local status = api.check_key(key)
     print(status)
@@ -61,7 +61,7 @@ local function checkKeyLuarmor(key)
     return false
 end
 
-
+-- Cek apakah ada key tersimpan & valid
 local function keyIsSaved()
     if isfile(KeyLimit) then
         local savedKey = readfile(KeyLimit)
@@ -99,7 +99,7 @@ end
         TextDark = Color3.fromRGB(160, 160, 200)
     }
 
- 
+    -- Utility: rounded + stroke
     local function ApplyUI(frame)
         local uicorner = Instance.new("UICorner", frame)
         uicorner.CornerRadius = UDim.new(0, 6)
@@ -146,7 +146,7 @@ end
     keyBox.TextSize = 14
     ApplyUI(keyBox)
 
-
+    -- Hanya Check Key di tengah
     local checkKey = Instance.new("TextButton", mainFrame)
     checkKey.Size = UDim2.new(1, -40, 0, 35)
     checkKey.Position = UDim2.new(0, 20, 0, 110)
@@ -189,4 +189,5 @@ checkKey.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Eksekusi auto load key
 keyIsSaved()
