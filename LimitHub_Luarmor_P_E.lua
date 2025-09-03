@@ -37,7 +37,7 @@ local KeyLimit = "LimitHub_Premium_Key.txt"
 local screenGui = Instance.new("ScreenGui", game.CoreGui)
 
 
--- Validasi key Luarmor
+
 local function checkKeyLuarmor(key)
     local status = api.check_key(key)
     print(status)
@@ -61,7 +61,7 @@ local function checkKeyLuarmor(key)
     return false
 end
 
--- Cek apakah ada key tersimpan & valid
+
 local function keyIsSaved()
     if isfile(KeyLimit) then
         local savedKey = readfile(KeyLimit)
@@ -99,7 +99,7 @@ end
         TextDark = Color3.fromRGB(160, 160, 200)
     }
 
-    -- Utility: rounded + stroke
+ 
     local function ApplyUI(frame)
         local uicorner = Instance.new("UICorner", frame)
         uicorner.CornerRadius = UDim.new(0, 6)
@@ -146,7 +146,7 @@ end
     keyBox.TextSize = 14
     ApplyUI(keyBox)
 
-    -- Hanya Check Key di tengah
+
     local checkKey = Instance.new("TextButton", mainFrame)
     checkKey.Size = UDim2.new(1, -40, 0, 35)
     checkKey.Position = UDim2.new(0, 20, 0, 110)
@@ -189,5 +189,4 @@ checkKey.MouseButton1Click:Connect(function()
     end
 end)
 
--- Eksekusi auto load key
 keyIsSaved()
