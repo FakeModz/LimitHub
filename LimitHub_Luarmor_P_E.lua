@@ -26,6 +26,9 @@ api.script_id = "f833e70d7d8c8e8f7274cffe0177834c"
 elseif game.PlaceId == 79546208627805 then
 --99 Night in Forest Lobby
 Notify("[Lobby] Please Enter in Game First")
+elseif game.PlaceId == 131716211654599 then
+--Fisch
+api.script_id = "4a114837bbfcc0fc1ff0b9d6ad06622b"
 else
 Notif("Game Not Supported")
 return
