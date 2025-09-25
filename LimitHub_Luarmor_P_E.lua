@@ -29,6 +29,9 @@ Notify("[Lobby] Please Enter in Game First")
 elseif game.PlaceId == 131716211654599 or game.PlaceId == 16732694052 then
 --Fisch
 api.script_id = "4a114837bbfcc0fc1ff0b9d6ad06622b"
+elseif game.PlaceId == 127742093697776 then
+--Plant Vs Brainrot
+api.script_id = "c58953b23a57cd13814adbd29df8a65a"
 else
 Notif("Game Not Supported")
 return
