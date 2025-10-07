@@ -9,8 +9,8 @@ local function Notif(text)
     end)
 end
 
-local Linkvertise = "https://ads.luarmor.net/get_key?for=Freemium_x_Linkvertise-gSsbDpqCwoQa"
-local Lootlabs = "https://ads.luarmor.net/get_key?for=Freemium_x_Lootslab-xHkQRXjEIpzu"
+local Linkvertise = "https://ads.luarmor.net/get_key?for=Linkvertise-sGGORVOOzylG"
+local Lootlabs = "https://ads.luarmor.net/get_key?for=Lootlabs-mAfbLFkpKwsn"
 local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 
 if game.PlaceId == 126884695634066 then
