@@ -13,16 +13,16 @@ local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.l
 
 if game.PlaceId == 126884695634066 then
 --Garden
-api.script_id = "14ddd2df212bfe81ab57137e802375a8"
+api.script_id = "2ffaf0f8243f858ce92ded27693c46a0"
 elseif game.PlaceId == 109983668079237 or game.PlaceId == 96342491571673 then
 --Brainrot
 api.script_id = "2fba8939469e00f99ecb49e540a3da35"
 elseif game.PlaceId == 121864768012064 then
 --Fish It
-api.script_id = "6308a1792cfa61e2a72f914dd8af5128"
+api.script_id = "9a6a7880a47ab2347e0a79c814ea30e0"
 elseif game.PlaceId == 126509999114328 then 
 --99 Night in Forest
-api.script_id = "f833e70d7d8c8e8f7274cffe0177834c"
+api.script_id = "0cfb55c04fc0efb5b474b8e79aa8fce3"
 elseif game.PlaceId == 79546208627805 then
 --99 Night in Forest Lobby
 Notify("[Lobby] Please Enter in Game First")
@@ -31,7 +31,7 @@ elseif game.PlaceId == 131716211654599 or game.PlaceId == 16732694052 then
 api.script_id = "4a114837bbfcc0fc1ff0b9d6ad06622b"
 elseif game.PlaceId == 127742093697776 then
 --Plant Vs Brainrot
-api.script_id = "c58953b23a57cd13814adbd29df8a65a"
+api.script_id = "3dd94b29e27405d7de6957d0afc82280"
 else
 Notif("Game Not Supported")
 return
