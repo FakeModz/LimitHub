@@ -34,6 +34,9 @@ api.script_id = "dff2d7e144df4f300dc3c35ab2b95e6e"
 elseif game.PlaceId == 127742093697776 then
 --Plant Vs Brainrot
 api.script_id = "d59fe42f0c7c96327ea4f2c4633e3725"
+elseif game.PlaceId == 96342491571673 or game.PlaceId == 109983668079237 then
+--Steal a Brainrot
+api.script_id = "ba8e102f820a451f8eac948c8c4b02bf"
 else
 Notif("Game Not Supported") 
 return
