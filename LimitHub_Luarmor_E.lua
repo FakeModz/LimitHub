@@ -16,9 +16,6 @@ local keyless = false
 if game.PlaceId == 126884695634066 then
 --Garden
 api.script_id = "c7e7c28da728c6863a012ed2bd46f183"
-elseif game.PlaceId == 109983668079237 or game.PlaceId == 96342491571673 then
---Brainrot
-api.script_id = "6f0b98e1fcdc5802e05d12fb3160357e"
 elseif game.PlaceId == 121864768012064 then
 --Fish It
 api.script_id = "f35449c1f3c63953383043ebbce06761"
