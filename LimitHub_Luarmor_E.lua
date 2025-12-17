@@ -135,6 +135,7 @@ mainFrame.BackgroundTransparency = 0.2
 mainFrame.Name = "MainFrame"
 ApplyUI(mainFrame)
 
+-- Title
 local title = Instance.new("TextLabel", mainFrame)
 title.Size = UDim2.new(1, 0, 0, 40)
 title.BackgroundTransparency = 1
@@ -143,6 +144,7 @@ title.TextColor3 = colors.Text
 title.Font = Enum.Font.GothamSemibold
 title.TextSize = 18
 
+-- Divider
 local divider = Instance.new("Frame", mainFrame)
 divider.Size = UDim2.new(1, -40, 0, 1)
 divider.Position = UDim2.new(0, 20, 0, 42)
@@ -150,6 +152,7 @@ divider.BackgroundColor3 = colors.Divider
 divider.BackgroundTransparency = 0.3
 divider.BorderSizePixel = 0
 
+-- KeyBox
 local keyBox = Instance.new("TextBox", mainFrame)
 keyBox.Size = UDim2.new(1, -40, 0, 36)
 keyBox.Position = UDim2.new(0, 20, 0, 60)
@@ -163,6 +166,7 @@ keyBox.Font = Enum.Font.Gotham
 keyBox.TextSize = 14
 ApplyUI(keyBox)
 
+-- Lootlabs Button
 local lootlabsBtn = Instance.new("TextButton", mainFrame)
 lootlabsBtn.Size = UDim2.new(0.5, -25, 0, 30)
 lootlabsBtn.Position = UDim2.new(0, 20, 0, 110)
@@ -175,6 +179,7 @@ lootlabsBtn.Font = Enum.Font.GothamBold
 lootlabsBtn.TextSize = 13
 ApplyUI(lootlabsBtn)
 
+-- Linkvertise Button
 local linkvertiseBtn = Instance.new("TextButton", mainFrame)
 linkvertiseBtn.Size = UDim2.new(0.5, -25, 0, 30)
 linkvertiseBtn.Position = UDim2.new(0.5, 5, 0, 110)
@@ -187,6 +192,7 @@ linkvertiseBtn.Font = Enum.Font.GothamBold
 linkvertiseBtn.TextSize = 13
 ApplyUI(linkvertiseBtn)
 
+-- Check Key Button
 local checkKey = Instance.new("TextButton", mainFrame)
 checkKey.Size = UDim2.new(0, 180, 0, 32)
 checkKey.Position = UDim2.new(0.5, -90, 0, 155)
@@ -199,6 +205,24 @@ checkKey.Font = Enum.Font.GothamBold
 checkKey.TextSize = 14
 ApplyUI(checkKey)
 
+-- Close Button
+local closeBtn = Instance.new("TextButton", mainFrame)
+closeBtn.Size = UDim2.new(0, 25, 0, 25)
+closeBtn.Position = UDim2.new(1, -30, 0, 5) -- pojok kanan atas
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Text = "X"
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 16
+closeBtn.AutoButtonColor = true
+closeBtn.BorderSizePixel = 0
+Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 5)
+
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- Footer
 local footer = Instance.new("TextLabel", mainFrame)
 footer.Size = UDim2.new(1, 0, 0, 20)
 footer.Position = UDim2.new(0, 0, 0.85, 0)
@@ -211,7 +235,7 @@ footer.TextTransparency = 0.3
 footer.TextYAlignment = Enum.TextYAlignment.Center
 footer.TextWrapped = false
 
-
+-- Button Callbacks
 lootlabsBtn.MouseButton1Click:Connect(function()
     setclipboard(Lootlabs)
     lootlabsBtn.Text = "Copied!"
@@ -225,7 +249,7 @@ linkvertiseBtn.MouseButton1Click:Connect(function()
     task.wait(3)
     linkvertiseBtn.Text = "Linkvertise"
 end)
- 
+
 checkKey.MouseButton1Click:Connect(function()
     local inputKey = keyBox.Text
     if inputKey == "" or #inputKey < 30 then
@@ -242,5 +266,6 @@ checkKey.MouseButton1Click:Connect(function()
         keyBox.PlaceholderText = "Key Invalid!"
     end
 end)
+
 
 keyIsSaved()
