@@ -41,6 +41,13 @@ Notif("Game Not Supported")
 return
 end
 
+if keyless then
+Notif("Script Loaded")
+task.wait(0.1)
+api.load_script()
+return
+end
+
 local Linkvertise = "https://ads.luarmor.net/get_key?for=Freemium_x_Linkvertise-gSsbDpqCwoQa"
 local Lootlabs = "https://ads.luarmor.net/get_key?for=Freemium_x_Lootslab-xHkQRXjEIpzu"
 local KeyLimit = "LimitHub_Premium_Key.txt"
