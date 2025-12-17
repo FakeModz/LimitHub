@@ -36,17 +36,18 @@ elseif game.PlaceId == 96342491571673 or game.PlaceId == 109983668079237 then
 --Steal a Brainrot
 api.script_id = "e1349ac314bdef3378ab7f59c06b340b"
 keyless = true
-else
-Notif("Game Not Supported")
-return
-end
-
 if keyless then
 Notif("Script Loaded")
 task.wait(0.1)
 api.load_script()
 return
 end
+else
+Notif("Game Not Supported")
+return
+end
+
+
 
 local Linkvertise = "https://ads.luarmor.net/get_key?for=Freemium_x_Linkvertise-gSsbDpqCwoQa"
 local Lootlabs = "https://ads.luarmor.net/get_key?for=Freemium_x_Lootslab-xHkQRXjEIpzu"
