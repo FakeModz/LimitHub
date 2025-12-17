@@ -10,7 +10,7 @@ local function Notif(text)
 end
 
 local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
-
+local keyless = false
 if game.PlaceId == 126884695634066 then
 --Garden
 api.script_id = "2ffaf0f8243f858ce92ded27693c46a0"
@@ -32,6 +32,10 @@ api.script_id = "4a114837bbfcc0fc1ff0b9d6ad06622b"
 elseif game.PlaceId == 127742093697776 then
 --Plant Vs Brainrot
 api.script_id = "3dd94b29e27405d7de6957d0afc82280"
+elseif game.PlaceId == 96342491571673 or game.PlaceId == 109983668079237 then
+--Steal a Brainrot
+api.script_id = "e1349ac314bdef3378ab7f59c06b340b"
+keyless = true
 else
 Notif("Game Not Supported")
 return
@@ -164,6 +168,22 @@ end
     checkKey.Font = Enum.Font.GothamBold
     checkKey.TextSize = 14
     ApplyUI(checkKey)
+
+local closeBtn = Instance.new("TextButton", mainFrame)
+closeBtn.Size = UDim2.new(0, 25, 0, 25)
+closeBtn.Position = UDim2.new(1, -30, 0, 5) 
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Text = "X"
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 16
+closeBtn.AutoButtonColor = true
+closeBtn.BorderSizePixel = 0
+Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 5)
+
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
 
     local footer = Instance.new("TextLabel", mainFrame)
     footer.Size = UDim2.new(1, 0, 0, 20)
