@@ -12,7 +12,7 @@ end
 local Linkvertise = "https://ads.luarmor.net/get_key?for=Linkvertise-sGGORVOOzylG"
 local Lootlabs = "https://ads.luarmor.net/get_key?for=Lootlabs-mAfbLFkpKwsn"
 local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
-
+local keyless = false
 if game.PlaceId == 126884695634066 then
 --Garden
 api.script_id = "c7e7c28da728c6863a012ed2bd46f183"
@@ -37,8 +37,16 @@ api.script_id = "d59fe42f0c7c96327ea4f2c4633e3725"
 elseif game.PlaceId == 96342491571673 or game.PlaceId == 109983668079237 then
 --Steal a Brainrot
 api.script_id = "ba8e102f820a451f8eac948c8c4b02bf"
+keyless = true
 else
 Notif("Game Not Supported") 
+return
+end
+
+if keyless then 
+Notif("Keyless Script Loaded")
+task.wait(0.1)
+api.load_script()
 return
 end
 
