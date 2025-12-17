@@ -14,9 +14,6 @@ local keyless = false
 if game.PlaceId == 126884695634066 then
 --Garden
 api.script_id = "2ffaf0f8243f858ce92ded27693c46a0"
-elseif game.PlaceId == 109983668079237 or game.PlaceId == 96342491571673 then
---Brainrot
-api.script_id = "2fba8939469e00f99ecb49e540a3da35"
 elseif game.PlaceId == 121864768012064 then
 --Fish It
 api.script_id = "9a6a7880a47ab2347e0a79c814ea30e0"
@@ -36,17 +33,17 @@ elseif game.PlaceId == 96342491571673 or game.PlaceId == 109983668079237 then
 --Steal a Brainrot
 api.script_id = "e1349ac314bdef3378ab7f59c06b340b"
 keyless = true
+else
+Notif("Game Not Supported")
+return
+end
+
 if keyless then
 Notif("Script Loaded")
 task.wait(0.1)
 api.load_script()
 return
 end
-else
-Notif("Game Not Supported")
-return
-end
-
 
 
 local Linkvertise = "https://ads.luarmor.net/get_key?for=Freemium_x_Linkvertise-gSsbDpqCwoQa"
